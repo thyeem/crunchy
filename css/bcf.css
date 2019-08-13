@@ -1,0 +1,153 @@
+section, article, aside, footer, header, nav, hgroup {
+	display: block;
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Alegreya SC';
+	color: #505260;
+	background-color: #efefef;
+}
+
+canvas {
+	display: inline
+}
+
+a {
+	color: #505260;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+input {
+    display: inline;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.fa {
+    font-size: 24px;
+}
+
+.flash {
+    background-color: #e3e4fa;
+}
+
+.menu {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.menu_timer {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    width: 70px;
+}
+
+.menu_nav {
+    display: inline-block;
+    margin-bottom: -3px;
+    text-align: center;
+	vertical-align: middle;
+    width: 70px;
+}
+
+.menu_score {
+    margin-bottom: 1px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: 220px;
+}
+
+.select-player { 
+	display: inline;
+    font-size: 16px;
+    font-family: 'Alegreya SC';
+    color: #444;
+    line-height: 1.2;
+    padding: 2px 6px 1px 6px;
+    margin: 1px;
+    border-radius: .3em;
+	outline: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+}
+
+#wrapper { 
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#board {
+	text-align: center;
+}
+
+#header {
+	font-family: 'Alegreya SC';
+	font-size: 22px;
+    line-height: 1.5em;
+}
+
+#counter {
+    display: inline;
+}
+
+#rp_list {
+    display: none;
+    float: left;
+    position: absolute;
+    background-color: #e8e8e8;
+    border: solid 1px #666;
+    border-radius: 10px;
+    min-width: 400px;
+    line-height: 1.5em;
+    color: #666;
+    font-size: 16px;
+    font-family: 'Alegreya SC';
+    padding: 6px 20px;
+    text-align: left;
+    left: 35%;
+} 
+
+#msg_div {
+    display: none;
+    float: left;
+    position: absolute;
+}
+
+#msg {
+    border: solid 1px #666;
+    border-radius: 10px;
+    background-color: #e8e8e8;
+    width: 300px;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: #666;
+    font-size: 16px;
+    font-family: 'Alegreya SC';
+    padding: 5px 20px;
+}
+
+#title {
+    margin-bottom:0px;
+    margin-top:0;
+    font-family: 'Alegreya SC';
+    font-size: 38px;
+}
+
+
