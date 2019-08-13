@@ -9,6 +9,7 @@ use CGI;
 use BCF::Game;
 use BCF::Config;
 
+my $debug = 0;
 my $cgi = CGI->new;
 print $cgi->header(-type => 'application/json', -charset => 'utf-8');
 
@@ -27,16 +28,20 @@ exit 1 unless ($agent eq SOFIAI || $agent eq MARIAI);
 my $g = BCF::Game->new($id);
 exit 1 if $turn ne $g->whose_turn;
 
-my $api_board = "tmp/$id.ai";
 my $ext = ( $bcf ) ? '' : '.x';
 my $bin = "bin/${agent}${ext}";
+my $api_board = "tmp/$id.ai";
 $g->write_api_board($api_board);
 exit 1 unless -e $api_board;
 
 # let AIs play the game instead --------------------
-## my $code = system($bin, $api_board);
-## return if $code;
-system($bin, $api_board);
+eval {
+    local $SIG{ALRM} = sub { exit 1 };
+    alarm 60;
+    system($bin, $api_board);
+    alarm 0;
+};
+## system($bin, $api_board);
 my ($x, $y) = $g->read_api_board($api_board, 1);
 return if $x < 0 || $y < 0;
 

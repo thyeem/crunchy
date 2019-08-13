@@ -1,13 +1,5 @@
 $(document).ready(function() {
     _counter = setInterval(clock_timer, 1000);
-    _board = new Image();
-    _black = new Image();
-    _white = new Image();
-    _dot = new Image();
-    _board.src = "img/board.png";
-    _black.src = "img/30px/black.png";
-    _white.src = "img/30px/white.png";
-    _dot.src = "img/30px/dot.png";
     _flash = null;
     _xhr = null;
     _ai = 0;
@@ -23,8 +15,20 @@ $(document).ready(function() {
     (_bell_on)? $('#bell').addClass('fa fa-bell') :
                 $('#bell').addClass('fa fa-bell-slash');
 
-    // put stones when loaded board img
+    // render board and stones
+    _board = new Image();
+    _black = new Image();
+    _white = new Image();
+    _dot = new Image();
     _board.onload = () => {
+        render_board();
+    }
+    _board.src = "img/board.png";
+    _black.src = "img/30px/black.png";
+    _white.src = "img/30px/white.png";
+    _dot.src = "img/30px/dot.png";
+
+    function render_board() {
         _context = document.getElementById('board').getContext('2d');
         _context.drawImage(_board, 0, 0, 570, 570);
         for (var n = 0; n < NL*NL; n++) { 
@@ -95,19 +99,23 @@ $(document).ready(function() {
     // TODO: when page is changed, call _xhr.abort()
 
     // AI event handler --------------------------------------
-    // onchange agents: leave to AI
-    $('.select-player').change(function() {
+    // onchange: let AIs go
+    $('#pB').change(function() {
         if (_locked) return false;
         _ai = 0;
         _pB = $('#pB').val();
-        _pW = $('#pW').val();
         if (_turn === BLACK && _pB !== HUMAN) _ai = 1;
+        if(_ai) ajax_let_AIs_play();
+        return false;
+    });
+
+    $('#pW').change(function() {
+        if (_locked) return false;
+        _ai = 0;
+        _pW = $('#pW').val();
         if (_turn === WHITE && _pW !== HUMAN) _ai = 1;
-        if (_ai) {
-            ajax_let_AIs_play();
-        } else {
-            return false;
-        }
+        if(_ai) ajax_let_AIs_play();
+        return false;
     });
 
     // ajax calling for AI api
@@ -116,7 +124,7 @@ $(document).ready(function() {
         var agent = (_turn === BLACK) ? _pB : _pW;
         $.ajax({
             type: 'post',
-            url: 'run_api.pl',
+            url: 'ajax_api.pl',
             timeout: 60000,
             data: {'id': _id, 'bcf': _bcf, 'turn': _turn, 'agent': agent},
         })
@@ -127,8 +135,8 @@ $(document).ready(function() {
         .always(function(res) {
             $('#x').val(res['x']);
             $('#y').val(res['y']);
-            do_before_submit()
-            setTimeout(() => { $('#form').submit(), 300});
+            do_before_submit();
+            $('#form').submit();
         });
     }
 
@@ -164,7 +172,6 @@ $(document).ready(function() {
    
     // toggle replay list
     $('#replay').click(function() {
-        $('#do').val('replay');
         $('#rp_list').fadeToggle(300);
     });
 
@@ -220,8 +227,9 @@ $(document).ready(function() {
         }
     });
 
-    // trigger if ai agents start to move or not
-    $('.select-player').trigger('change');
+    // trigger AI agents if needed
+    (_turn === BLACK) ? $('#pB').trigger('change')
+                      : $('#pW').trigger('change');
 
 }); // end of ready
 
