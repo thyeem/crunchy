@@ -93,7 +93,7 @@ $(document).ready(function() {
         $('#do').val('replay');
         $('#go').val((n < 0)? 0 : n);
         do_before_submit();
-        $('#form').submit();
+        $('#form').trigger('submit');
     }
 
     // TODO: when page is changed, call _xhr.abort()
@@ -136,9 +136,23 @@ $(document).ready(function() {
             $('#x').val(res['x']);
             $('#y').val(res['y']);
             do_before_submit();
-            $('#form').submit();
+            $('#form').trigger('submit');
         });
     }
+
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+        })
+        .done(function(html) {
+            $('#wrapper').replaceWith(html);
+        })
+    });
+
 
     // submit event handler --------------------------------------
     // clicking board
@@ -152,7 +166,7 @@ $(document).ready(function() {
         $('#x').val(x);
         $('#y').val(y);
         do_before_submit();
-        $('#form').submit();
+        $('#form').trigger('submit');
         return false;
     });
     
@@ -180,7 +194,7 @@ $(document).ready(function() {
         $('#do').val('undo');
         $('#go').val(_moves-1);
         do_before_submit();
-        $('#form').submit();
+        $('#form').trigger('submit');
         return false;
     });
 
@@ -230,6 +244,7 @@ $(document).ready(function() {
     // trigger AI agents if needed
     (_turn === BLACK) ? $('#pB').trigger('change')
                       : $('#pW').trigger('change');
+
 
 }); // end of ready
 

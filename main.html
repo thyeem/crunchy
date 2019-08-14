@@ -31,7 +31,9 @@
             _pB = "[% pB %]" || HUMAN;
             _pW = "[% pW %]" || HUMAN;
             _bell_on = (_replay) ? 0 : 1;
+            _alert = "[% alert %]";
             _view = [ [% FOREACH q IN view %]'[% q %]',[% END %] ];
+
         });
     </script>
     <script src="[% js_bcf %]"></script>
@@ -143,16 +145,12 @@
 
     <!-- copyright -->
     Sofimarie Bitten Connect Five [% dash %] (c) 2019 Francis.
-</div>
 
-<!-- popup msg -->
-[% IF alert %]
-<script>
-    $(window).load(function() {
-        setTimeout(function() { alert("[% alert %]") }, 300);
-    });
-</script>
-[% END %]
+    <!-- popup msg --> 
+    [% IF alert %]
+    <script>setTimeout(function() { alert("[% alert %]") }, 300);</script>
+    [% END %]
+</div>
 
 </body>
 </html>

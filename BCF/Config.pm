@@ -25,7 +25,7 @@ sub new {
         css_bcf    => 'css/bcf.css',
         css_fa     => 'css/font-awesome.min.css',
         js_bcf     => 'js/bcf.js',
-        js_jquery  => 'js/jquery-1.11.3.min.js',
+        js_jquery  => 'js/jquery-3.4.1.min.js',
         letter     => 'xxxxx.dat',
         S          => '&nbsp;',
         M          => '&ensp;',
