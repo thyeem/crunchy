@@ -290,6 +290,12 @@ $(document).ready(function() {
         } else if (e.which === 40) {
             goto_move(_moves+5)
             return false;
+        } else if (e.which === 48) {
+            goto_move(0)
+            return false;
+        } else if (e.which === 57) {
+            goto_move(361)
+            return false;
         }
     });
 
