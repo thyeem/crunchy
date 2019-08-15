@@ -28,7 +28,8 @@ sub init {
     $self->{x}   = $self->{cgi}->param('x');
     $self->{y}   = $self->{cgi}->param('y');
     $self->{bcf} = $self->{cgi}->param('bcf');
-    $self->{ewp} = $self->{cgi}->param('ewp');
+    $self->{eB}  = $self->{cgi}->param('eB');
+    $self->{eW}  = $self->{cgi}->param('eW');
     $self->{msg} = $self->{cgi}->param('msg');
     $self->{game} = ( $self->{do} eq 'replay' ) ? BCF::Game->new($self->{id}, 1)
                                                 : BCF::Game->new($self->{id});
@@ -49,6 +50,7 @@ sub do_selector {
             return;
         }
         $self->{game}->make_move($x, $y);
+        $self->{game}->update_EWP($self->{eB}, $self->{eW});
         my $winner = $self->{game}->who_won;
         $self->{alert} = 'Black won.' if $winner eq BLACK;
         $self->{alert} = 'White won.' if $winner eq WHITE;
@@ -64,6 +66,7 @@ sub do_selector {
 
     } elsif ( $self->{do} eq 'replay' ) {
         $self->{replay} = 1;
+        $self->{locked} = 1;
         return unless defined $self->{go};
         $self->{game}->goto_move($self->{go});
     }

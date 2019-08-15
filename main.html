@@ -8,48 +8,18 @@
     <link rel="stylesheet" href="[% css_fa %]">
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
-    <script>
-        $(function() {
-            SOFIAI = "[% SOFIAI %]";
-            MARIAI = "[% MARIAI %]";
-            HUMAN = "[% HUMAN %]";
-            BLACK = "[% BLACK %]";
-            WHITE = "[% WHITE %]";
-            EMPTY = "[% EMPTY %]";
-            NL = [% NL %];
-            _id = "[% id %]";
-            _bcf = [% bcf %];
-            _unit = [% unit %];
-            _sec = [% timeout %];
-            _locked = [% locked %];
-            _turn = "[% board.turn %]";
-            _lastX = [% board.X %];
-            _lastY = [% board.Y %];
-            _moves = [% board.moves %];
-            _violation = [% violation %];
-            _replay = [% replay %];
-            _pB = "[% pB %]" || HUMAN;
-            _pW = "[% pW %]" || HUMAN;
-            _bell_on = (_replay) ? 0 : 1;
-            _alert = "[% alert %]";
-            _view = [ [% FOREACH q IN view %]'[% q %]',[% END %] ];
-
-        });
-    </script>
     <script src="[% js_bcf %]"></script>
     <title>[% title %]</title>
     <link href="https://fonts.googleapis.com/css?family=Alegreya+SC:500,700" rel="stylesheet">
     <!--link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png"-->
 </head>
 
-<body class="flash">
+<body>
 <div id="wrapper">
-    <!-- title & game id -->
-    <h1 id="title"><b>[% title %]</b></h1>
-
     <div id="header">
-    <form id="form" action="index.pl" method="[% method %]">
-
+        <!-- title & game id -->
+        <h1 id="title"><b>[% title %]</b></h1>
+        <form id="form" action="index.pl" method="[% method %]">
         <!-- BCF mode -->
         <div class="menu" title="Goggle BCF Mode">
             <a href="#" id="bcf_mode">
@@ -71,7 +41,7 @@
                 <i class="fa fa-send" style="color:#31b5d6"></i>[% M %]
             </a>
             <div id="msg_div">
-                <input type="text" id="msg" name="msg" value="">
+                <input type="text" id="msg" name="msg">
             </div>
         </div>
 
@@ -115,14 +85,14 @@
 
         <!-- players / victory Points -->
         <div class="menu_score" title="Black/White Victory Points">
-            <select name="pB" id="pB" class="select-player">
-                <option value="human" selected>&#9679; Human</option>
+            <select id="pB" name="pB" class="select-player">
+                <option value="human">&#9679; Human</option>
                 <option value="sofia">&#9679; SofiAI</option>
                 <option value="maria">&#9679; MariAI</option>
             </select>
             <b>[% board.scoreB %]</b> [% S %]
-            <select name="pW" id="pW" class="select-player">
-                <option value="human" selected>&#9675; Human</option>
+            <select id="pW" name="pW" class="select-player">
+                <option value="human">&#9675; Human</option>
                 <option value="sofia">&#9675; SofiAI</option>
                 <option value="maria">&#9675; MariAI</option>
             </select>
@@ -131,26 +101,49 @@
 
         <!-- hidden values -->
         <input type="hidden" id="id" name="id" value="[% id %]">
+        <input type="hidden" id="bcf" name="bcf" value="[% bcf %]">
+        <input type="hidden" id="turn" name="turn" value="[% board.turn %]">
+        <input type="hidden" id="moves" name="moves" value="[% board.moves %]">
+        <input type="hidden" id="x" name="x" value="[% board.X %]">
+        <input type="hidden" id="y" name="y" value="[% board.Y %]">
+        <input type="hidden" id="eB" name="eB" value="[% eB %]">
+        <input type="hidden" id="eW" name="eW" value="[% eW %]">
         <input type="hidden" id="do" name="do">
         <input type="hidden" id="go" name="go">
-        <input type="hidden" id="x"  name="x">
-        <input type="hidden" id="y"  name="y">
-        <input type="hidden" id="bcf" name="bcf">
+        <input type="hidden" id="SOFIAI" value="[% SOFIAI %]">
+        <input type="hidden" id="MARIAI" value="[% MARIAI %]">
+        <input type="hidden" id="HUMAN" value="[% HUMAN %]">
+        <input type="hidden" id="BLACK" value="[% BLACK %]">
+        <input type="hidden" id="WHITE" value="[% WHITE %]">
+        <input type="hidden" id="EMPTY" value="[% EMPTY %]">
+        <input type="hidden" id="UNIT" value="[% UNIT %]">
+        <input type="hidden" id="NL" value="[% NL %]">
+        <input type="hidden" id="sec" value="[% timeout %]">
+        <input type="hidden" id="locked" value="[% locked %]">
+        <input type="hidden" id="view" value="[% view %]">
+        <input type="hidden" id="rpOn" value="[% replay %]">
+        <input type="hidden" id="alert" value="[% alert %]">
+        <input type="hidden" id="pBset" value="[% pB %]">
+        <input type="hidden" id="pWset" value="[% pW %]">
+        </form>
+    </div>  
 
-    </form>
+    <!-- winning probability -->
+    <div id="prob">
+        <span class="overflow inline-block-fixed" id="black-wp"></span><span class="overflow inline-block-fixed" id="white-wp"></span>
     </div>
 
     <!-- game board -->
-    <div><canvas id="board" width="570" height="570"> </canvas></div>
+    <div><canvas id="board" width="570" height="570"></canvas></div>
 
     <!-- copyright -->
     Sofimarie Bitten Connect Five [% dash %] (c) 2019 Francis.
-
-    <!-- popup msg --> 
-    [% IF alert %]
-    <script>setTimeout(function() { alert("[% alert %]") }, 300);</script>
-    [% END %]
 </div>
+
+<!-- popup msg --> 
+[% IF alert %]
+<script>setTimeout(function() { alert("[% alert %]") }, 300);</script>
+[% END %]
 
 </body>
 </html>

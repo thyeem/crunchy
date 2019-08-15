@@ -6,7 +6,7 @@ body {
     font-size: 16px;
     font-family: 'Alegreya SC';
 	color: #505260;
-	background-color: #efefef;
+    background-color: #e3e4fa;
 }
 
 canvas {
@@ -39,7 +39,7 @@ textarea:focus, input:focus{
 }
 
 .flash {
-    background-color: #e3e4fa;
+	background-color: #efefef;
 }
 
 .menu {
@@ -94,6 +94,7 @@ textarea:focus, input:focus{
 }
 
 #board {
+    padding-top: 3px;
 	text-align: center;
 }
 
@@ -101,6 +102,9 @@ textarea:focus, input:focus{
 	font-family: 'Alegreya SC';
 	font-size: 22px;
     line-height: 1.5em;
+	text-align: center;
+	vertical-align: middle;
+    margin: 0 auto;
 }
 
 #counter {
@@ -144,10 +148,50 @@ textarea:focus, input:focus{
 }
 
 #title {
-    margin-bottom:0px;
+    margin-bottom:5px;
     margin-top:0;
     font-family: 'Alegreya SC';
     font-size: 38px;
+}
+
+.overflow {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.inline-block-fixed {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#prob {
+	text-align: center;
+    margin: 0 auto;
+    width: 568px;
+    height: 20px;
+    border: solid 1px #444;
+    font-size: 16px;
+}
+
+#black-wp {
+	text-align: center;
+    width: 50%;
+    height: 100%;
+    background-color: #444;
+    color: #eee;
+}
+
+#white-wp {
+	text-align: center;
+    width: 50%;
+    height: 100%;
+    background-color: #eee;
+    color: #444;
 }
 
 

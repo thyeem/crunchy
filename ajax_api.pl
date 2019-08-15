@@ -42,13 +42,16 @@ eval {
     alarm 0;
 };
 ## system($bin, $api_board);
-my ($x, $y) = $g->read_api_board($api_board, 1);
+my ($x, $y, $eB, $eW) = $g->read_api_board($api_board, 1);
+($eB, $eW) = ('', '') if $agent ne MARIAI;
 return if $x < 0 || $y < 0;
 
 # JSON response to ajax request --------------------
 my $json = JSON->new->utf8->pretty(1)->encode({
     x => $x+1, 
     y => $y+1, 
+    eB => $eB,
+    eW => $eW,
 });
 
 print $json;

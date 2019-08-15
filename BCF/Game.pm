@@ -21,6 +21,8 @@ sub new {
 sub init {
     my $self = shift;
     $self->set_player(HUMAN, HUMAN);
+    $self->{eB} = '50.0';
+    $self->{eW} = '50.0';
     $self->assert_path('sav');
     $self->assert_path('tmp');
     my $file = 'sav/game.list';
@@ -73,6 +75,11 @@ sub load_game {
     $self->{id} = $id;
     $self->{board} = BCF::Board->new($board);
     $self->{log} = $log;
+    return unless scalar @{$log};
+    $self->{pB} = $log->[-1]{pB};
+    $self->{pW} = $log->[-1]{pW};
+    $self->{eB} = $log->[-1]{eB};
+    $self->{eW} = $log->[-1]{eW};
 }
 
 sub load_gamelist {
@@ -95,16 +102,23 @@ sub save_gamelist {
     lock_nstore $db, 'sav/game.list'
 }
 
+sub update_EWP {
+    my ($self, $eB, $eW) = @_;
+    return if !$eB || !$eW;
+    $self->{eB} = $eB;
+    $self->{eW} = $eW;
+}
+
 sub set_player {
     my ($self, $playerB, $playerW) = @_;
-    $self->{playerB} = $playerB;
-    $self->{playerW} = $playerW;
+    $self->{pB} = $playerB;
+    $self->{pW} = $playerW;
 }
 
 sub get_player {
     my ($self, $stone) = @_;
-    return $self->{playerB} if $stone eq BLACK;
-    return $self->{playerB} if $stone eq WHITE;
+    return $self->{pB} if $stone eq BLACK;
+    return $self->{pB} if $stone eq WHITE;
 }
 
 sub whose_turn {
@@ -119,7 +133,14 @@ sub whose_turn_player {
 
 sub make_move {
     my ($self, $x, $y) = @_;
-    push @{ $self->{log} }, [$x, $y] if $self->{board}->make_move($x, $y);
+    my $d = {
+        'xy' => [$x, $y],
+        'pB' => $self->{pB},
+        'pW' => $self->{pW},
+        'eB' => $self->{eB},
+        'eW' => $self->{eW},
+    };
+    push @{ $self->{log} }, $d if $self->{board}->make_move($x, $y);
 }
 
 sub undo_move {
@@ -148,20 +169,64 @@ sub goto_move {
         $self->{board} = BCF::Board->new;
     } else {
         $self->goto_move($n-1);
-        my ($x, $y) = @{ $self->{log}[$n-1] }[0,1];
+        my $d = $self->{log}[$n-1];
+        my ($x, $y) = @{ $d->{xy} }[0,1];
         $self->{board}->make_move($x, $y);
+        ($self->{pB}, $self->{pW}) = ($d->{pB}, $d->{pW});
+        ($self->{eB}, $self->{eW}) = ($d->{eB}, $d->{eW});
     }
 }
 
 sub ravel_board {
     my $self = shift;
-    my $res = [];
+    my @res = ();
     for my $x ( 1 .. NL ) {
         for my $y ( 1 .. NL ) {
-            push @{$res}, $self->{board}->get_stone($x, $y);
+            push @res, $self->{board}->get_stone($x, $y);
         }
     }
-    return $res;
+    return join ':', @res;
+}
+
+sub read_api_board {
+    my ($self, $api_board, $read_only) = @_;
+    open my $fh, '<', $api_board or die "failed: $!";
+    my $fs = do { local $\; <$fh> };
+    close $fh;
+    my @data = split /:/, $fs;
+    return if @data != 369;
+    $self->{board}->set_last_move(shift @data, shift @data);
+    $self->{board}{moves} = shift @data;
+    $self->{board}{turn} = itoa(shift @data);
+    $self->{board}{last} = ($self->{board}{turn} eq BLACK)? WHITE : BLACK;
+    $self->{board}{scoreB} = shift @data;
+    $self->{board}{scoreW} = shift @data;
+    $self->{eB} = sprintf "%.1f", (shift @data)/10;
+    $self->{eW} = sprintf "%.1f", (shift @data)/10;
+    $self->{eW} = sprintf "%.1f", 100 - $self->{eB};
+    return ($self->{board}->get_last_move, $self->{eB}, $self->{eW}) if $read_only;
+    for my $i ( 1 .. NL ) {
+        for my $j ( 1 .. NL ) {
+            $self->{board}{_}{$i}{$j} = itoa(shift @data);
+        }
+    }
+}
+
+sub write_api_board {
+    my ($self, $api_board) = @_;
+    my @res = ($self->{board}->get_last_move, $self->{board}{moves});
+    push @res, atoi($self->{board}->whose_turn);
+    push @res, map { $self->{board}->get_score($_) } (BLACK, WHITE);
+    push @res, int($self->{eB}*10);
+    push @res, int((100-$self->{eB})*10);
+    for my $i ( 1 .. NL ) {
+        for my $j ( 1 .. NL ) {
+            push @res, atoi($self->{board}->get_stone($i, $j));
+        }
+    }
+    open my $fh, '>', $api_board;
+    print {$fh} join ':', @res;
+    close $fh;
 }
 
 sub itoa {
@@ -179,43 +244,5 @@ sub atoi {
     return  0 if $a eq EMPTY;
     return undef;
 }
-
-sub read_api_board {
-    my ($self, $api_board, $read_only) = @_;
-    open my $fh, '<', $api_board or die "failed: $!";
-    my $fs = do { local $\; <$fh> };
-    close $fh;
-    my @data = split /:/, $fs;
-    return if @data != 368;
-    $self->{board}->set_last_move(shift @data, shift @data);
-    return $self->{board}->get_last_move if $read_only;
-    $self->{board}{moves} = shift @data;
-    $self->{board}{turn} = itoa(shift @data);
-    $self->{board}{scoreB} = shift @data;
-    $self->{board}{scoreW} = shift @data;
-    shift @data;
-    for my $i ( 1 .. NL ) {
-        for my $j ( 1 .. NL ) {
-            $self->{board}{_}{$i}{$j} = itoa(shift @data);
-        }
-    }
-}
-
-sub write_api_board {
-    my ($self, $api_board) = @_;
-    my @res = ($self->{board}->get_last_move, $self->{board}{moves});
-    push @res, atoi($self->{board}->whose_turn);
-    push @res, map { $self->{board}->get_score($_) } (BLACK, WHITE);
-    push @res, 500;
-    for my $i ( 1 .. NL ) {
-        for my $j ( 1 .. NL ) {
-            push @res, atoi($self->{board}->get_stone($i, $j));
-        }
-    }
-    open my $fh, '>', $api_board;
-    print {$fh} join ':', @res;
-    close $fh;
-}
-
 
 1;
