@@ -34,6 +34,11 @@ sub new {
         method     => 'post',
         cgi        => undef,
         game       => undef,
+        keys       => [
+                        '78f8ca2251ebb2b0bbfde24ce77e0e99f9c321cc',
+                        'dea1e3e99b29a9edbadd649a06e47f04d760aaf7',
+                        'aaa6503284a6870515bcff9a0c68b969c94fa61b',
+                      ],
         #------------------------------------------------
         HUMAN      => HUMAN,
         SOFIAI     => SOFIAI,

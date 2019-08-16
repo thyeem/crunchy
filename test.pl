@@ -2,7 +2,7 @@
 use feature qw/ say /;
 use Storable qw / lock_nstore lock_retrieve /;
 use IPC::Run qw/ run timeout /;
-
+use Digest::SHA qw/ sha1_hex /;
 use BCF::Board;
 use BCF::Game;
 use BCF::Config;
@@ -20,7 +20,7 @@ sub print_sav {
 
 sub convert_sav {
     my $db = lock_retrieve 'sav/game.list';
-    for my $f (keys %${db}) {
+    for my $f (sort { $db->{$a}{time} cmp $db->{$b}{time} } keys %${db}) {
         say $f;
         my ($b, $g) = @{ lock_retrieve "sav/$f" }[0, 1];
         my $e = [];
@@ -38,3 +38,4 @@ sub convert_sav {
     }
 }
 
+print_sav;

@@ -21,8 +21,8 @@ sub new {
 sub init {
     my $self = shift;
     $self->set_player(HUMAN, HUMAN);
-    $self->{eB} = '50.0';
-    $self->{eW} = '50.0';
+    $self->{eB} = undef;
+    $self->{eW} = undef;
     $self->assert_path('sav');
     $self->assert_path('tmp');
     my $file = 'sav/game.list';
@@ -102,7 +102,17 @@ sub save_gamelist {
     lock_nstore $db, 'sav/game.list'
 }
 
-sub update_EWP {
+sub delete_gamelist {
+    my ($self, $id) = @_;
+    my $db = lock_retrieve 'sav/game.list';
+    for ( keys %{$db} ) {
+        delete $db->{$id} if $_ eq $id;
+    }
+    lock_nstore $db, 'sav/game.list';
+    unlink "sav/$id" if -e "sav/$id";
+}
+
+sub set_EWP {
     my ($self, $eB, $eW) = @_;
     return if !$eB || !$eW;
     $self->{eB} = $eB;
@@ -167,6 +177,8 @@ sub goto_move {
     return if $n > scalar @{ $self->{log} };
     if ( $n == 0 ) { 
         $self->{board} = BCF::Board->new;
+        ($self->{pB}, $self->{pW}) = (HUMAN, HUMAN);
+        ($self->{eB}, $self->{eW}) = (undef, undef);
     } else {
         $self->goto_move($n-1);
         my $d = $self->{log}[$n-1];
@@ -217,8 +229,8 @@ sub write_api_board {
     my @res = ($self->{board}->get_last_move, $self->{board}{moves});
     push @res, atoi($self->{board}->whose_turn);
     push @res, map { $self->{board}->get_score($_) } (BLACK, WHITE);
-    push @res, int($self->{eB}*10);
-    push @res, int((100-$self->{eB})*10);
+    push @res, 500;
+    push @res, 500;
     for my $i ( 1 .. NL ) {
         for my $j ( 1 .. NL ) {
             push @res, atoi($self->{board}->get_stone($i, $j));

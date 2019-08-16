@@ -34,6 +34,10 @@ textarea:focus, input:focus{
     outline: none;
 }
 
+[contentEditable=true]:empty:not(:focus):before {
+    content:attr(data-text)
+}
+
 .fa {
     font-size: 24px;
 }
@@ -111,39 +115,39 @@ textarea:focus, input:focus{
     display: inline;
 }
 
-#rp_list {
-    display: none;
-    float: left;
-    position: absolute;
-    background-color: #e8e8e8;
-    border: solid 1px #666;
-    border-radius: 10px;
-    min-width: 400px;
-    line-height: 1.5em;
-    color: #666;
-    font-size: 16px;
-    font-family: 'Alegreya SC';
-    padding: 6px 20px;
-    text-align: left;
-    left: 35%;
-} 
-
-#msg_div {
+.float-div {
     display: none;
     float: left;
     position: absolute;
 }
 
-#msg {
+.float-box {
+    background-color: #e8e8e8;
     border: solid 1px #666;
     border-radius: 10px;
-    background-color: #e8e8e8;
-    width: 300px;
-    height: 1.5em;
     line-height: 1.5em;
     color: #666;
     font-size: 16px;
     font-family: 'Alegreya SC';
+
+}
+
+#rp-list {
+    min-width: 400px;
+    padding: 6px 20px;
+    text-align: left;
+    left: 35%;
+} 
+
+#pwd {
+    width: 300px;
+    height: 1.5em;
+    padding: 5px 20px;
+}
+
+#msg {
+    width: 300px;
+    height: 1.5em;
     padding: 5px 20px;
 }
 

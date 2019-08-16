@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
     <script src="[% js_bcf %]"></script>
+    <script src="js/sha1.js"></script>
     <title>[% title %]</title>
     <link href="https://fonts.googleapis.com/css?family=Alegreya+SC:500,700" rel="stylesheet">
     <!--link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png"-->
@@ -22,37 +23,45 @@
         <form id="form" action="index.pl" method="[% method %]">
         <!-- BCF mode -->
         <div class="menu" title="Goggle BCF Mode">
-            <a href="#" id="bcf_mode">
-                <i class="fa fa-toggle-on" id="bcf_switch"   
-                   style="color:#299c39;font-size:28px"></i>[% M %]
+            <a href="#" id="bcf-mode">
+            <i class="fa fa-toggle-on" id="bcf-switch"   
+               style="color:#299c39;font-size:28px"></i>[% M %]
             </a>
         </div>
 
         <!-- new game -->
         <div class="menu" title="New Game">
             <a href="./">
-                <i class="fa fa-delicious" style="color:#3152a5"></i>[% M %]
+            <i class="fa fa-delicious" style="color:#3152a5"></i>[% M %]
             </a>
         </div>
         
         <!-- save -->
         <div class="menu">
             <a href="#" id="save" title="Save the Current Game">
-                <i class="fa fa-send" style="color:#31b5d6"></i>[% M %]
+            <i class="fa fa-send" style="color:#31b5d6"></i>[% M %]
             </a>
-            <div id="msg_div">
-                <input type="text" id="msg" name="msg">
+            <div id="msg-div" class="float-div">
+                <input type="text" id="msg" name="msg" class="float-box"
+                 placeholder="Save game: text and press Enter">
+            </div>
+            <div id="key-div" class="float-div">
+                <input type="password" id="pwd" name="pwd" class="float-box"
+                 placeholder="Reserved key">
             </div>
         </div>
 
         <!-- replay -->
         <div class="menu" title="Replay the Saved Games">
             <a href="#" id="replay">
-                <i class="fa fa-bookmark" style="color:#ff3118"></i>[% M %]
+            <i class="fa fa-bookmark" style="color:#ff3118"></i>[% M %]
             </a>
-            <div id="rp_list">
+            <div id="rp-list" class="float-div float-box">
             [% FOREACH db IN gamelist %]
-                <div><a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a></div>
+                <div>
+                    <a href="#" id="[% db.id %]" class="rp-del">[x]</a>[% M %]
+                    <a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
+                </div>
             [% END %]
             </div>
         </div>
@@ -60,7 +69,7 @@
         <!-- undo -->
         <div class="menu" title="Undo Last Move">
             <a href="#" id="undo">
-                <i class="fa fa-undo" style="color:#ff6342"></i>[% M %]
+            <i class="fa fa-undo" style="color:#ff6342"></i>[% M %]
             </a>
         </div>
 
@@ -75,11 +84,11 @@
         <!-- Move nav -->
         <div class="menu" title="Navigator / # of Moves">
             <a href="#" id="back">
-                <i class="fa fa-arrow-left" style="color:#3152a5"></i>
+            <i class="fa fa-arrow-left" style="color:#3152a5"></i>
             </a>
             [% S %][% board.moves %][% S %]
             <a href="#" id="forth">
-                <i class="fa fa-arrow-right" style="color:#3152a5"></i>
+            <i class="fa fa-arrow-right" style="color:#3152a5"></i>
             </a>
         </div>
 
@@ -125,6 +134,7 @@
         <input type="hidden" id="alert" value="[% alert %]">
         <input type="hidden" id="pBset" value="[% pB %]">
         <input type="hidden" id="pWset" value="[% pW %]">
+        <input type="hidden" id="did" name="did">
         </form>
     </div>  
 
