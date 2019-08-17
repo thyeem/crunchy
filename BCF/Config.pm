@@ -50,7 +50,6 @@ sub new {
         UNIT       => 30,
         timeout    => 120,
         locked     => 0,
-        replay     => 0,
         alert      => '',
         view       => '',
         gamelist   => [],

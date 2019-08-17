@@ -174,7 +174,7 @@ sub who_won {
 sub goto_move {
     my ($self, $n) = @_;
     return if $n < 0;
-    return if $n > scalar @{ $self->{log} };
+    $n = ($n > @{ $self->{log} }) ? @{ $self->{log} } : $n;
     if ( $n == 0 ) { 
         $self->{board} = BCF::Board->new;
         ($self->{pB}, $self->{pW}) = (HUMAN, HUMAN);

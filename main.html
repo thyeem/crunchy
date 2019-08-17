@@ -130,7 +130,6 @@
         <input type="hidden" id="sec" value="[% timeout %]">
         <input type="hidden" id="locked" value="[% locked %]">
         <input type="hidden" id="view" value="[% view %]">
-        <input type="hidden" id="rpOn" value="[% replay %]">
         <input type="hidden" id="alert" value="[% alert %]">
         <input type="hidden" id="pBset" value="[% pB %]">
         <input type="hidden" id="pWset" value="[% pW %]">
@@ -138,13 +137,19 @@
         </form>
     </div>  
 
+
     <!-- winning probability -->
     <div id="prob">
         <span class="overflow inline-block-fixed" id="black-wp"></span><span class="overflow inline-block-fixed" id="white-wp"></span>
     </div>
 
+    <!-- loading spinner -->
+    <div id="spinner"></div>
+
     <!-- game board -->
-    <div><canvas id="board" width="570" height="570"></canvas></div>
+    <div>
+        <canvas id="board" width="570" height="570"></canvas>
+    </div>
 
     <!-- copyright -->
     Sofimarie Bitten Connect Five [% dash %] (c) 2019 Francis.

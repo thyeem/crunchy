@@ -22,7 +22,7 @@ sub new {
 sub init {
     my $self = shift;
     $self->{do}  = $self->{cgi}->param('do');
-    $self->{id}  = $self->{cgi}->param('id') || undef;
+    $self->{id}  = $self->{cgi}->param('id');
     $self->{go}  = $self->{cgi}->param('go');
     $self->{pB}  = $self->{cgi}->param('pB') || HUMAN;
     $self->{pW}  = $self->{cgi}->param('pW') || HUMAN;
@@ -34,9 +34,15 @@ sub init {
     $self->{msg} = $self->{cgi}->param('msg');
     $self->{pwd} = $self->{cgi}->param('pwd');
     $self->{did} = $self->{cgi}->param('did');
-    $self->{game} = ( $self->{do} eq 'replay' ) ? BCF::Game->new($self->{id}, 1)
-                                                : BCF::Game->new($self->{id});
-    $self->{bcf} = ( $self->{id} && !$self->{bcf} )? 0 : 1;
+
+    my $id = ( $self->{id} ) ? $self->{id} : undef;
+    if ( $self->{do} && $self->{do} eq 'replay' ) {
+        $self->{game} = ( -e "sav/$id" ) ? BCF::Game->new($id, 1)
+                                         : BCF::Game->new($id);
+    } else {
+        $self->{game} = BCF::Game->new($id);
+    }
+    $self->{bcf} = ( $id && !$self->{bcf} )? 0 : 1;
     $self->{game}->set_bcf_mode($self->{bcf});
     $self->{id} = $self->{game}{id};
 }
@@ -68,6 +74,7 @@ sub do_selector {
         $self->{locked} = 1 if $winner;
     } elsif ( $self->{do} eq 'undo' ) {
         $self->{game}->undo_move;
+        $self->{game}->set_player($self->{pB}, $self->{pW});
 
     } elsif ( $self->{do} eq 'save' ) {
         $self->{msg} =~ s/^\s+|\s+$//g;
@@ -78,12 +85,10 @@ sub do_selector {
         $self->{locked} = 1;
 
     } elsif ( $self->{do} eq 'replay' ) {
-        $self->{replay} = 1;
         $self->{locked} = 1;
         return unless defined $self->{go};
         $self->{game}->goto_move($self->{go});
     } elsif ( $self->{do} eq 'delete' ) {
-        $self->{replay} = 1;
         $self->{locked} = 1;
         return unless $self->validate_passwd($self->{pwd});
         return unless defined $self->{did};

@@ -24,7 +24,6 @@ $(document).ready(function() {
     $y = $('#y');
     $moves = $('#moves');
     $turn = $('#turn');
-    $rpOn = $('#rpOn');
     $alert = $('#alert');
     $bell = $('#bell');
     $bell_switch = $('#bell-switch');
@@ -50,6 +49,7 @@ $(document).ready(function() {
     $forth = $('#forth');
     $undo = $('#undo');
     $replay = $('#replay');
+    $spinner = $('#spinner');
 
     // define-init global var ------------------------------
     NL = $NL.val();
@@ -74,9 +74,8 @@ $(document).ready(function() {
     _y = +$y.val();
     _moves = +$moves.val();
     _turn = $turn.val();
-    _rpOn = +$rpOn.val();
     _alert = $alert.val();
-    _bellOn = (_locked ||_rpOn) ? 0 : 1;
+    _bellOn = (_locked) ? 0 : 1;
     _flash = null;
     _counter = null;
     _xhr = null;
@@ -111,6 +110,7 @@ $(document).ready(function() {
     }
 
     function render_header() {
+        $spinner.hide();
         $pB.val(_pB);
         $pW.val(_pW);
         $bcf_switch.removeClass();
@@ -138,8 +138,13 @@ $(document).ready(function() {
         else return true;
     }
 
-    // counter
-    function clock_timer() {
+    // clock-timer
+    function set_timer() {
+        if (_locked || !_bellOn) return false;
+        _counter = setInterval(update_counter, 1000);
+    }
+
+    function update_counter() {
         if (_locked || !_bellOn) return false;
         if (_sec > 0 ) $counter.html(--_sec);
         flash_screen();
@@ -148,8 +153,8 @@ $(document).ready(function() {
         if (_sec <= 0) {
             var whowon = (_turn === BLACK) ? "White" : "Black";
             alert('Oops! Time\'s up. ' + whowon + ' won.');
-            clearInterval(_flash);
-            clearInterval(_counter);
+            if (_counter) clearInterval(_counter);
+            if (_flash) clearInterval(_flash);
             _locked = 1;
         }
         return false;
@@ -170,11 +175,10 @@ $(document).ready(function() {
     }
 
     function goto_move(n) {
-        if (! _rpOn) return;
+        if (!_locked) return false;
         $do.val('replay');
         $go.val((n < 0)? 0 : n);
         $form.trigger('submit');
-        return false;
     }
 
     // manual submit redefined
@@ -187,8 +191,9 @@ $(document).ready(function() {
             dataType: 'html',
         })
         .done(function(data) {
-            $('header').remove();
-            $body.html(data);
+            var d = document.open("text/html", "replace");
+            d.write(data);
+            d.close();
             return false;
         })
         return false;
@@ -201,7 +206,7 @@ $(document).ready(function() {
         _xhr = $.ajax({
             type: 'post',
             url: 'ajax_api.pl',
-            timeout: 60000,
+            timeout: 40000,
             data: {'id': _id, 'bcf': _bcf, 'turn': _turn, 'agent': agent},
         })
         .fail(function(req, status, msg) {
@@ -213,6 +218,7 @@ $(document).ready(function() {
             $y.val(res['y']);
             if (res['eB']) $eB.val(res['eB']);
             if (res['eW']) $eW.val(res['eW']);
+            $spinner.fadeOut();
             do_before_submit();
             $form.trigger('submit');
             return false;
@@ -237,23 +243,29 @@ $(document).ready(function() {
     // AI event handler --------------------------------------
     // onchange: let AIs go
     $pB.change(function() {
-        if (_xhr !== null) _xhr.abort();
+        if (_xhr) _xhr.abort();
         if (_locked) return false;
         _pB = $pB.val();
         if (_turn === BLACK && _pB !== HUMAN) _pBai = 1;
-        if (_pBai) ajax_let_AIs_play();
-        if (_pBai) $(this).off('click');
+        if (_pBai) {
+            ajax_let_AIs_play();
+            $(this).off('click');
+            $spinner.fadeIn();
+        }
         return false;
     });
 
     $pW.change(function() {
-        if (_xhr !== null) _xhr.abort();
+        if (_xhr) _xhr.abort();
         if (_locked) return false;
         if (_pWai) return false; 
         _pW = $pW.val();
         if (_turn === WHITE && _pW !== HUMAN) _pWai = 1;
-        if (_pWai) ajax_let_AIs_play();
-        if (_pWai) $(this).off('click');
+        if (_pWai) { 
+            ajax_let_AIs_play();
+            $(this).off('click');
+            $spinner.fadeIn();
+        }
         return false;
     });
 
@@ -300,6 +312,7 @@ $(document).ready(function() {
             $do.val('save');
             $float_div.hide();
             $key_div.show();
+            $pwd.focus();
             return false;
         }
     });
@@ -342,6 +355,7 @@ $(document).ready(function() {
         $did.val($(this).attr('id'));
         $float_div.hide();
         $key_div.fadeToggle(300);
+        $pwd.focus();
     });
 
     // submit undo 
@@ -363,13 +377,15 @@ $(document).ready(function() {
     });
     
     // submit nav-back
-    $back.one('click', function() {
+    $back.click(function() {
+        if (!_locked) return false;
         goto_move(_moves-1);
         return false;
     });
     
     // submit nav-forth 
-    $forth.one('click', function() {
+    $forth.click(function() {
+        if (!_locked) return false;
         goto_move(_moves+1);
         return false;
     });
@@ -385,23 +401,17 @@ $(document).ready(function() {
     // left/right arrow key trigger
     $body.one('keydown', function(e) {
         if (e.which === 37) {
-            goto_move(_moves-1)
-            return false;
+            goto_move(_moves-1);
         } else if (e.which === 39) {
-            goto_move(_moves+1)
-            return false;
+            goto_move(_moves+1);
         } else if (e.which === 38) {
-            goto_move(_moves-5)
-            return false;
+            goto_move(_moves-5);
         } else if (e.which === 40) {
-            goto_move(_moves+5)
-            return false;
+            goto_move(_moves+5);
         } else if (e.which === 48) {
-            goto_move(0)
-            return false;
+            goto_move(0);
         } else if (e.which === 57) {
-            goto_move(361)
-            return false;
+            goto_move(361);
         } else if (e.which === 77) {
             $timer.trigger('click');
             return false;
@@ -409,7 +419,7 @@ $(document).ready(function() {
     });
     
     // run-run-run -----------------------------------------
-    _counter = setInterval(clock_timer, 1000);
+    set_timer();
     render_header();
     render_EWP();
     render_board();

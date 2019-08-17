@@ -11,7 +11,7 @@ use Data::Dump qw/ dump /;
 
 sub print_sav {
     my $db = lock_retrieve 'sav/game.list';
-    for my $f (keys %${db}) {
+    for my $f (sort { $db->{$a}{time} <=> $db->{$b}{time} } keys %{$db}) {
         my ($b, $g) = @{ lock_retrieve "sav/$f" }[0, 1];
         say $f;
         say dump($g);
@@ -20,7 +20,7 @@ sub print_sav {
 
 sub convert_sav {
     my $db = lock_retrieve 'sav/game.list';
-    for my $f (sort { $db->{$a}{time} cmp $db->{$b}{time} } keys %${db}) {
+    for my $f (sort { $db->{$a}{time} <=> $db->{$b}{time} } keys %{$db}) {
         say $f;
         my ($b, $g) = @{ lock_retrieve "sav/$f" }[0, 1];
         my $e = [];
