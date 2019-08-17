@@ -103,12 +103,12 @@ textarea:focus, input:focus{
 }
 
 #header {
+    margin: 0 auto;
+	vertical-align: middle;
+	text-align: center;
 	font-family: 'Alegreya SC';
 	font-size: 22px;
     line-height: 1.5em;
-	text-align: center;
-	vertical-align: middle;
-    margin: 0 auto;
 }
 
 #spinner {
@@ -128,9 +128,11 @@ textarea:focus, input:focus{
 }
 
 .float-div {
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
     display: none;
-    float: left;
-    position: absolute;
 }
 
 .float-box {
@@ -141,14 +143,25 @@ textarea:focus, input:focus{
     color: #666;
     font-size: 16px;
     font-family: 'Alegreya SC';
+    overflow: scroll;
 
 }
 
-#rp-list {
-    min-width: 400px;
+#help {
+    min-width: 370px;
+    width: 40%;
+    height: 70%;
     padding: 6px 20px;
     text-align: left;
-    left: 35%;
+    margin-top: 5px;
+}
+
+#rp-list {
+    min-width: 370px;
+    width: 40%;
+    height: 70%;
+    padding: 6px 20px;
+    text-align: left;
 } 
 
 #pwd {

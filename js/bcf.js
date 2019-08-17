@@ -49,6 +49,8 @@ $(document).ready(function() {
     $forth = $('#forth');
     $undo = $('#undo');
     $replay = $('#replay');
+    $help = $('#help');
+    $title = $('#title');
     $spinner = $('#spinner');
 
     // define-init global var ------------------------------
@@ -113,13 +115,8 @@ $(document).ready(function() {
         $spinner.hide();
         $pB.val(_pB);
         $pW.val(_pW);
-        $bcf_switch.removeClass();
-        $bell.removeClass();
-        (_bcf)? $bcf_switch.addClass('fa fa-toggle-on') :
-                $bcf_switch.addClass('fa fa-toggle-off');
-
-        (_bellOn)? $bell.addClass('fa fa-bell') :
-                   $bell.addClass('fa fa-bell-slash');
+        (_bcf)? toggle_bcf(1) : toggle_bcf(0);
+        (_bellOn)? toggle_bell(1) : toggle_bell(0); 
     }
 
     function render_EWP() {
@@ -165,6 +162,38 @@ $(document).ready(function() {
             _flash = setInterval(function() {
                 $body.toggleClass('flash')
             }, 400);
+        }
+    }
+
+    function toggle_bell(m) {
+        if (m === undefined) {
+            _bellOn = (_bellOn)? 0 : 1;
+            $bell.toggleClass("fa-bell");
+            $bell.toggleClass("fa-bell-slash");
+        } else if (m === 1) {
+            _bellOn = 1;
+            $bell.removeClass();
+            $bell.addClass('fa fa-bell');
+        } else {
+            _bellOn = 0;
+            $bell.removeClass();
+            $bell.addClass('fa fa-bell-slash');
+        }
+    }
+
+    function toggle_bcf(m) {
+        if (m === undefined) {
+            _bcf = _bcf ? 0 : 1;
+            $bcf_switch.toggleClass("fa-toggle-on");
+            $bcf_switch.toggleClass("fa-toggle-off");
+        } else if (m === 1) {
+            _bcf = 1;
+            $bcf_switch.removeClass();
+            $bcf_switch.addClass('fa fa-toggle-on');
+        } else {
+            _bcf = 0;
+            $bcf_switch.removeClass();
+            $bcf_switch.addClass('fa fa-toggle-off');
         }
     }
 
@@ -287,22 +316,22 @@ $(document).ready(function() {
     
     // bcf mode switch
     $bcf_mode.click(function() {
-        $bcf_switch.toggleClass("fa-toggle-on");
-        $bcf_switch.toggleClass("fa-toggle-off");
-        _bcf = _bcf ? 0 : 1;
+        toggle_bcf();
         return false;
     });
     
     // toggle save input 
     $save.click(function() {
-        $msg_div.fadeToggle(300);
+        $msg_div.fadeIn();
+        $msg.focus();
+        toggle_bell(0);
         return false;
     });
 
-    $msg.on('mouseover', function() {
-        $msg_div.show();
+    $msg.on('mouseout', function() {
+        $msg_div.hide();
         return false;
-    }).on('mouseout', function() {
+    }).focusout(function() {
         $msg_div.hide();
         return false;
     });
@@ -337,7 +366,8 @@ $(document).ready(function() {
    
     // toggle replay list
     $replay.click(function() {
-        $rp_list.fadeToggle(300);
+        $rp_list.fadeToggle();
+        toggle_bell(0);
         return false;
     });
 
@@ -358,6 +388,18 @@ $(document).ready(function() {
         $pwd.focus();
     });
 
+    // HELP
+    $title.click(function() {
+        $help.fadeToggle();
+        toggle_bell(0);
+        return false;
+    });
+    
+    $help.on('mouseout', function() {
+        $help.hide();
+        return false;
+    });
+
     // submit undo 
     $undo.click(function() {
         if (_pBai || _pWai) return false;
@@ -370,9 +412,7 @@ $(document).ready(function() {
 
     // counter switch
     $timer.click(function() {
-        $bell.toggleClass("fa-bell");
-        $bell.toggleClass("fa-bell-slash");
-        _bellOn = (_bellOn)? 0 : 1;
+        toggle_bell();
         return false;
     });
     
@@ -413,8 +453,7 @@ $(document).ready(function() {
         } else if (e.which === 57) {
             goto_move(361);
         } else if (e.which === 77) {
-            $timer.trigger('click');
-            return false;
+            toggle_bell(0);
         }
     });
     

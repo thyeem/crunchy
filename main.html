@@ -19,7 +19,7 @@
 <div id="wrapper">
     <div id="header">
         <!-- title & game id -->
-        <h1 id="title"><b>[% title %]</b></h1>
+        <a href="" ><h1 id="title"><b>[% title %]</b></h1></a>
         <form id="form" action="index.pl" method="[% method %]">
         <!-- BCF mode -->
         <div class="menu" title="Goggle BCF Mode">
@@ -146,10 +146,61 @@
     <!-- loading spinner -->
     <div id="spinner"></div>
 
-    <!-- game board -->
-    <div>
-        <canvas id="board" width="570" height="570"></canvas>
+    <!-- help popup -->
+    <div id="help" class="float-div float-box">
+    <!-- HELP DOC /////////////////////////////////////////////////////////-->
+        - Game<br/>
+        Bitten Connect Five (BCF) [% dash %] A brand new game created by Francis.<br/>
+        Francis wanted to change "Gomoku" with a more complex rule.<br/><br/>
+
+        - Playing with AI<br/>
+        Francis created some AI applications for this game [% dash %]
+        SofiAI and MariAI [% dash %] Just select one from the select-box.<br/> 
+        Enjoy the time with them.<br/><br/>
+
+        - Rule<br/>
+        <b><u>BCF rule</u></b>: One can clamp the enemy's two successive stones
+        in any directions if any [% dash %] then capture those stones.<br/>
+        (1) firstly makes five stones in a row [% dash %] victory<br/>
+        (2) 10 captured stones [% dash %] victory<br/><br/>
+
+        - Menu<br/>
+        <i class="fa fa-toggle-on" style="color:#299c39;font-size:16px"></i>[% L %]
+        Toggle BCF game mode. (See the BCF rule above)<br/>
+        <i class="fa fa-delicious" style="color:#3152a5;font-size:16px"></i>[% L %]
+        Start a new game<br/>
+        <i class="fa fa-send" style="color:#31b5d6;font-size:16px"></i>[% L %]
+        Save the most recent game played<br/>
+        <i class="fa fa-bookmark" style="color:#ff3118;font-size:16px"></i>[% L %]
+        Load and replay the game list saved<br/>
+        <i class="fa fa-undo" style="color:#ff6342;font-size:16px"></i>[% L %]
+        Undo last move on the game plyaing<br/>
+        <i class="fa fa-bell" style="color:#ffff9c;font-size:16px"></i>[% L %]
+        Toggle clock timer (time per move: 120 secs by default)<br/>
+        <i class="fa fa-arrow-right" style="color:#3152a5;font-size:16px"></i>[% L %]
+        Move back and forth (only activated in the finished game)<br/>
+        <img src="img/spinner.svg" style="width:16px;height:16px;">[% L %]
+        All accesss denied while AI is thinking<br/><br/>
+
+        - Estimated Winning Probability (EWP) Bar</br>
+        <div style="border: solid 1px #444;background-color:#eee;width:300px;">
+        <div style="text-align:center;color:#eee;height:20px;
+                    width:75%;background-color:#444">70%</div></div>
+        EWP is updated right after every MariAI's move only.<br/>
+        Freely select each player from the drop-down menu.<br/><br/>
+
+        - Shortcuts<br/>
+        [right-arrow] [% dash %] Go to the next move<br/>
+        [left-arrow] [% dash %] Go to the previous move<br/>
+        [up-arrow] [% dash %] Jump to the previous 5- move<br/>
+        [down-arrow] [% dash %] Jump to the next 5+ move<br/>
+        0 [% dash %] Go to the first move<br/>
+        9 [% dash %] Go to the last move<br/>
+        m [% dash %] Off clock timer<br/><br/>
+    <!-- END OF HELP //////////////////////////////////////////////////////-->
     </div>
+    <!-- game board -->
+    <div><canvas id="board" width="570" height="570"></canvas></div>
 
     <!-- copyright -->
     Sofimarie Bitten Connect Five [% dash %] (c) 2019 Francis.
