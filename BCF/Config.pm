@@ -48,7 +48,7 @@ sub new {
         EMPTY      => EMPTY,
         NL         => NL,
         UNIT       => 30,
-        timeout    => 120,
+        timeout    => 180,
         locked     => 0,
         alert      => '',
         view       => '',

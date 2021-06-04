@@ -445,7 +445,7 @@ $(document).ready(function() {
     });
     
     // run-run-run -----------------------------------------
-    set_timer();
+    // set_timer();
     render_header();
     render_EWP();
     render_board();
