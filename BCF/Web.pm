@@ -55,8 +55,8 @@ sub validate_passwd {
 
 sub do_selector {
     my $self = shift;
-    if ( ! $self->{do} ) {    
-    ## normal playing 
+    if ( ! $self->{do} ) {
+    ## normal playing
         my ($x, $y) = ($self->{x}, $self->{y});
         return unless ( $x && $y );
         if ( $self->{game}{board}->is_invalid_move($x, $y) == 2 ) {
@@ -74,7 +74,8 @@ sub do_selector {
         $self->{locked} = 1 if $winner;
     } elsif ( $self->{do} eq 'undo' ) {
         $self->{game}->undo_move;
-        $self->{game}->set_player($self->{pB}, $self->{pW});
+        #$self->{game}->set_player($self->{pB}, $self->{pW});
+        $self->{game}->set_player(HUMAN, HUMAN);
 
     } elsif ( $self->{do} eq 'save' ) {
         $self->{msg} =~ s/^\s+|\s+$//g;
