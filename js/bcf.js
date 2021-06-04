@@ -49,7 +49,6 @@ $(document).ready(function() {
     $forth = $('#forth');
     $undo = $('#undo');
     $replay = $('#replay');
-    $help = $('#help');
     $title = $('#title');
     $spinner = $('#spinner');
 
@@ -386,18 +385,6 @@ $(document).ready(function() {
         $float_div.hide();
         $key_div.fadeToggle(300);
         $pwd.focus();
-    });
-
-    // HELP
-    $title.click(function() {
-        $help.fadeToggle();
-        toggle_bell(0);
-        return false;
-    });
-    
-    $help.on('mouseout', function() {
-        $help.hide();
-        return false;
     });
 
     // submit undo 

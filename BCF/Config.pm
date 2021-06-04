@@ -20,7 +20,7 @@ use constant {
 sub new {
     my $class = shift;
     my $self = {
-        title      => 'Bitten Connect Five',
+	title      => 'Crunchy',
         template   => 'main.html',
         css_bcf    => 'css/bcf.css',
         css_fa     => 'css/font-awesome.min.css',

@@ -1,23 +1,23 @@
-section, article, aside, footer, header, nav, hgroup {
-	display: block;
+section, article, aside, footer, header, nav, hgroup { 
+    display: block;
 }
 
 body {
     font-size: 16px;
-    font-family: 'Alegreya SC';
-	color: #505260;
+    font-family: 'Alegreya SC'; 
+    color: #505260;
     background-color: #e3e4fa;
 }
 
 canvas {
-	display: inline
+    display: inline
 }
 
 a {
-	color: #505260;
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
+    color: #505260; 
+    margin: 0; 
+    padding: 0; 
+    text-decoration: none;
 }
 
 form {
@@ -39,32 +39,33 @@ textarea:focus, input:focus{
 }
 
 .fa {
-    font-size: 24px;
+    font-size: 40px;
 }
 
-.flash {
-	background-color: #efefef;
+.flash { 
+    background-color: #efefef;
 }
 
 .menu {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
+
 }
 
 .menu_timer {
     display: inline-block;
     text-align: left;
     vertical-align: middle;
-    width: 70px;
+	font-size:24px;
 }
 
 .menu_nav {
     display: inline-block;
     margin-bottom: -3px;
-    text-align: center;
-	vertical-align: middle;
-    width: 70px;
+    text-align: left;
+    vertical-align: middle;
+    width: 100px;
 }
 
 .menu_score {
@@ -72,19 +73,19 @@ textarea:focus, input:focus{
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    width: 220px;
+	font-size:24px;
+    width: 400px;
 }
 
 .select-player { 
-	display: inline;
-    font-size: 16px;
+    display: inline;
+	font-size:18px;
     font-family: 'Alegreya SC';
     color: #444;
-    line-height: 1.2;
-    padding: 2px 6px 1px 6px;
-    margin: 1px;
-    border-radius: .3em;
-	outline: none;
+    padding: 2px;
+    margin: 2px;
+    border-radius: .8em;
+    outline: none;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -92,23 +93,24 @@ textarea:focus, input:focus{
 }
 
 #wrapper { 
-	margin: 0 auto;
-	text-align: center;
-	vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #board {
-    padding-top: 3px;
-	text-align: center;
+    padding-top: 3px; 
+    text-align: center;
 }
 
 #header {
-    margin: 0 auto;
-	vertical-align: middle;
-	text-align: center;
-	font-family: 'Alegreya SC';
-	font-size: 22px;
-    line-height: 1.5em;
+    margin: 0 auto; 
+    margin-top: 21px;
+    vertical-align: middle; 
+    text-align: center; 
+    font-family: 'Alegreya SC'; 
+    font-size: 20px;
+    line-height: 1.4em;
 }
 
 #spinner {
@@ -148,12 +150,11 @@ textarea:focus, input:focus{
 }
 
 #help {
-    min-width: 370px;
+    min-width: 400px;
     width: 40%;
     height: 70%;
     padding: 6px 20px;
     text-align: left;
-    margin-top: 5px;
 }
 
 #rp-list {
@@ -199,16 +200,17 @@ textarea:focus, input:focus{
 }
 
 #prob {
-	text-align: center;
+    text-align: center;
     margin: 0 auto;
     width: 568px;
+    min-width: 368px;
     height: 20px;
     border: solid 1px #444;
     font-size: 16px;
 }
 
-#black-wp {
-	text-align: center;
+#black-wp { 
+    text-align: center;
     width: 50%;
     height: 100%;
     background-color: #444;
@@ -216,7 +218,7 @@ textarea:focus, input:focus{
 }
 
 #white-wp {
-	text-align: center;
+    text-align: center;
     width: 50%;
     height: 100%;
     background-color: #eee;
