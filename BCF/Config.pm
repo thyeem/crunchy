@@ -5,7 +5,7 @@ package BCF::Config;
 use base qw / Exporter /;
 our @EXPORT = qw / NL GOAL HUMAN SOFIAI MARIAI BLACK WHITE EMPTY VP /;
 
-use constant { 
+use constant {
     NL => 19,
     GOAL => 5,
     HUMAN => 'human',

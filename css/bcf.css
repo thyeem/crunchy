@@ -192,6 +192,25 @@ textarea:focus, input:focus{
     font-size: 38px;
 }
 
+#avatar {
+    width: 55px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+#user-avatar-on {
+    width: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 3px solid salmon;
+}
+
+#user-avatar-off {
+    width: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
 .overflow {
     max-width: 100%;
     overflow: hidden;

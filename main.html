@@ -20,97 +20,97 @@
     <div id="header">
     <!-- title & game id -->
     <form id="form" action="index.pl" method="[% method %]">
-		<center><div style="margin: 5px;">
-			<!-- Crunchy mode -->
-			<div class="menu" title="Goggle Crunchy Mode">
-				<a href="#" id="bcf-mode">
-				<i class="fa fa-toggle-on" id="bcf-switch"
-				   style="color:#299c39;font-size:46px"></i>
-				</a> [% L %]
-			</div>
+        <center><div style="margin: 5px;">
+            <!-- Crunchy mode -->
+            <div class="menu" title="Goggle Crunchy Mode">
+                <a href="#" id="bcf-mode">
+                <i class="fa fa-toggle-on" id="bcf-switch"
+                   style="color:#299c39;font-size:46px"></i>
+                </a> [% L %]
+            </div>
 
-			<!-- new game -->
-			<div class="menu" title="New Game">
-				<a href="./">
-				<i class="fa fa-delicious" style="color:#3152a5"></i>
-				</a> [% L %][% M %]
-			</div>
+            <!-- new game -->
+            <div class="menu" title="New Game">
+                <a href="./">
+                <i class="fa fa-delicious" style="color:#3152a5"></i>
+                </a> [% L %][% M %]
+            </div>
 
-			<!-- replay -->
-			<div class="menu" title="Replay the Saved Games">
-				<a href="#" id="replay">
-				<i class="fa fa-bookmark" style="color:#ff3118"></i>
-				</a> [% L %]
-				<div id="rp-list" class="float-div float-box">
-				[% FOREACH db IN gamelist %]
-					<div>
-						<a href="#" id="[% db.id %]" class="rp-del">[x]</a>[% L %]
-						<a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
-					</div>
-				[% END %]
-				</div>
-			</div>
+            <!-- replay -->
+            <div class="menu" title="Replay the Saved Games">
+                <a href="#" id="replay">
+                <i class="fa fa-bookmark" style="color:#ff3118"></i>
+                </a> [% L %]
+                <div id="rp-list" class="float-div float-box">
+                [% FOREACH db IN gamelist %]
+                    <div>
+                        <a href="#" id="[% db.id %]" class="rp-del">[x]</a>[% L %]
+                        <a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
+                    </div>
+                [% END %]
+                </div>
+            </div>
 
-			<!-- save -->
-			<div class="menu">
-				<a href="#" id="save" title="Save the Current Game">
-				<i class="fa fa-send" style="color:#31b5d6"></i>
-				</a> [% L %]
-				<div id="msg-div" class="float-div">
-					<input type="text" id="msg" name="msg" class="float-box"
-					 placeholder="Save game: text and press Enter">
-				</div>
-				<div id="key-div" class="float-div">
-					<input type="password" id="pwd" name="pwd" class="float-box"
-					 placeholder="Reserved key">
-				</div>
-			</div>
+            <!-- save -->
+            <div class="menu">
+                <a href="#" id="save" title="Save the Current Game">
+                <i class="fa fa-send" style="color:#31b5d6"></i>
+                </a> [% L %]
+                <div id="msg-div" class="float-div">
+                    <input type="text" id="msg" name="msg" class="float-box"
+                     placeholder="Save game: text and press Enter">
+                </div>
+                <div id="key-div" class="float-div">
+                    <input type="password" id="pwd" name="pwd" class="float-box"
+                     placeholder="Reserved key">
+                </div>
+            </div>
 
-			<!-- counter -->
-			<!-- div class="menu_timer" title="Toggle Counter">
-				<a href="#" id="timer">
-				<i class="fa fa-bell" id="bell" style="color:#ffff9c"></i>
-				<span id="counter">[% timeout %]</span>
-				</a> [% M %]
-			</div-->
+            <!-- counter -->
+            <!-- div class="menu_timer" title="Toggle Counter">
+                <a href="#" id="timer">
+                <i class="fa fa-bell" id="bell" style="color:#ffff9c"></i>
+                <span id="counter">[% timeout %]</span>
+                </a> [% M %]
+            </div-->
 
-			<!-- Move nav -->
-			<!--div class="menu" title="Navigator / # of Moves">
-				<a href="#" id="back">
-				<i class="fa fa-arrow-left" style="color:#3152a5"></i>
-				</a>
-				[% M %][% board.moves %][% M %]
-				<a href="#" id="forth">
-				<i class="fa fa-arrow-right" style="color:#3152a5"></i>
-				</a> [% M %]
-			</div-->
+            <!-- Move nav -->
+            <!--div class="menu" title="Navigator / # of Moves">
+                <a href="#" id="back">
+                <i class="fa fa-arrow-left" style="color:#3152a5"></i>
+                </a>
+                [% M %][% board.moves %][% M %]
+                <a href="#" id="forth">
+                <i class="fa fa-arrow-right" style="color:#3152a5"></i>
+                </a> [% M %]
+            </div-->
 
-			<!-- undo -->
-			<div class="menu" title="Undo Last Move">
-				<a href="#" id="undo">
-				<i class="fa fa-undo" style="color:#ff6342;font-size:44px"></i>
-				</a>
-				[% L %]
-			</div>
-		</div></center>
+            <!-- undo -->
+            <div class="menu" title="Undo Last Move">
+                <a href="#" id="undo">
+                <i class="fa fa-undo" style="color:#ff6342;font-size:44px"></i>
+                </a>
+                [% L %]
+            </div>
+        </div></center>
 
-		<center><div style="margin: 5px;">
-			<!-- players / victory Points -->
-			<div class="menu_score" title="Black/White Victory Points">
-				<select id="pB" name="pB" class="select-player">
-					<option value="human">&#9679; Human</option>
-					<option value="sofia">&#9679; SofiAI</option>
-					<option value="maria">&#9679; MariAI</option>
-				</select>
-				<b>[% board.scoreB %]</b> [% L %]
-				<select id="pW" name="pW" class="select-player">
-					<option value="human">&#9675; Human</option>
-					<option value="sofia">&#9675; SofiAI</option>
-					<option value="maria">&#9675; MariAI</option>
-				</select>
-				<b>[% board.scoreW %]</b>
-			</div>
-		</div></center>
+        <center><div style="margin: 5px;">
+            <!-- players / victory Points -->
+            <div class="menu_score" title="Black/White Victory Points">
+                <select id="pB" name="pB" class="select-player">
+                    <option value="human">&#9679; Human</option>
+                    <option value="sofia">&#9679; SofiAI</option>
+                    <option value="maria">&#9679; MariAI</option>
+                </select>
+                <b>[% board.scoreB %]</b> [% L %]
+                <select id="pW" name="pW" class="select-player">
+                    <option value="human">&#9675; Human</option>
+                    <option value="sofia">&#9675; SofiAI</option>
+                    <option value="maria">&#9675; MariAI</option>
+                </select>
+                <b>[% board.scoreW %]</b>
+            </div>
+        </div></center>
 
 
         <!-- hidden values -->
@@ -156,66 +156,67 @@
     <!-- about the game: crunchy -->
     <center>
     <div id="help">
-	<h2>* What's this game?</h2>
-	<h4>Crunchy [% dash %] A brand new game created by Francis.<br/>
-	He wanted to make <a href="https://en.wikipedia.org/wiki/Gomoku">Omok (a.k.a. Gomoku)</a> more interesting by adding a very simple rule [% dash %] Crunchy rule.</h4>
+    <h2>* What's this game?</h2>
+    <h4>Crunchy [% dash %] A brand new game created by Francis.<br/>
+    He wanted to make <a href="https://en.wikipedia.org/wiki/Gomoku">Omok (a.k.a. Gomoku)</a>
+    more interesting by adding a very simple rule [% dash %] Crunchy rule.</h4>
 
-	<hr>
-	<h2>* Rule</h2>
+    <hr>
+    <h2>* Rule</h2>
     <h4><u>Crunchy rule</u> [% dash %] One can clamp the enemy's two successive stones
     in any directions if any. Feel free to capture those stones.<br/><br/>
-    (1) Firstly makes five stones in a row [% dash %]> victory<br/>
-    (2) Getting 10 captured stones [% dash %]> victory</h4>
+    (1) Firstly making five stones in a row [% dash %]> victory<br/>
+    (2) Firstly getting 10 captured stones [% dash %]> victory</h4>
 
-	<hr>
-        <h2>* Playing with AI</h2>
-	<h4>Francis created some AI applications for this game [% dash %]
-        SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/>
-	Enjoy the time with them.</h4>
+    <hr>
+    <h2>* Playing with AI [% L %] <img id="avatar" src="img/id_sofia.png">[% M %]<img id="avatar" src="img/id_maria.png"></h2>
+    <h4>Francis created some AI applications for this game [% dash %]
+    SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/>
+    Enjoy the time with them.</h4>
 
-	<hr>
-	<h2>* Menu</h2>
-	<h4><i class="fa fa-toggle-on" style="color:#299c39;font-size:26px"></i>
-	[% L %] Toggle Crunchy game mode. (See the Crunchy rule above)</h4>
-	<h4><i class="fa fa-delicious" style="color:#3152a5;font-size:26px"></i>
-	[% L %] Start a new game</h4>
-	<h4><i class="fa fa-send" style="color:#31b5d6;font-size:26px"></i>
-	[% L %] Save the most recent game played</h4>
-	<h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:26px"></i>
-	[% L %] Load and replay the game list saved</h4>
-	<h4><i class="fa fa-undo" style="color:#ff6342;font-size:26px"></i>
-	[% L %] Undo last move on the game plyaing</h4>
+    <hr>
+    <h2>* Menu</h2>
+    <h4><i class="fa fa-toggle-on" style="color:#299c39;font-size:30px"></i>
+    [% L %] Toggle Crunchy game mode. (See the Crunchy rule above)</h4>
+    <h4><i class="fa fa-delicious" style="color:#3152a5;font-size:30px"></i>
+    [% L %] Start a new game</h4>
+    <h4><i class="fa fa-send" style="color:#31b5d6;font-size:28px"></i>
+    [% L %] Save the most recent game played</h4>
+    <h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:30px"></i>
+    [% L %] Load and replay the game list saved</h4>
+    <h4><i class="fa fa-undo" style="color:#ff6342;font-size:30px"></i>
+    [% L %] Undo last move on the game plyaing</h4>
 
-	<!--
+    <!--
         <i class="fa fa-bell" style="color:#ffff9c;font-size:24px"></i>
-		[% L %]
+        [% L %]
         Toggle clock timer (time per move: 120 secs by default)<br/>
         <i class="fa fa-arrow-right" style="color:#3152a5;font-size:24px"></i>
-		[% L %]
+        [% L %]
         Move back and forth (only activated in the finished game)<br/>
-	-->
-	<h4><img src="img/spinner.svg" style="width:20px;height:20px;">
-	[% L %] Indicating AI is thinking</h4>
+    -->
+    <h4><img src="img/spinner.svg" style="height:24px;">
+    [% L %] Indicating AI is thinking</h4>
 
-	<hr>
-	<h2>* Estimated Winning Probability (EWP) Bar</h2>
-	<div style="border: solid 1px #444;background-color:#eee;width:300px;">
-	<div style="text-align:center;color:#eee;height:20px;
-		    width:75%;background-color:#444">70%</div></div>
-	<h4>
-	EWP is updated right after every MariAI's move only.</br>
-	Freely select each player from the drop-down menu.</h4>
+    <hr>
+    <h2>* Estimated Winning Probability (EWP) Bar</h2>
+    <div style="border: solid 1px #444;background-color:#eee;width:300px;">
+    <div style="text-align:center;color:#eee;height:20px;
+                width:75%;background-color:#444">70%</div></div>
+    <h4>
+    EWP is updated right after every MariAI's move only.</br>
+    Freely select each player from the drop-down menu.</h4>
 
-	<hr>
-	<h2>* Shortcuts</h2>
-	<h4>
-        [right-arrow] [% dash %] Go to the next move<br/>
-        [left-arrow] [% dash %] Go to the previous move<br/>
-        [up-arrow] [% dash %] Jump to the previous 5- move<br/>
-        [down-arrow] [% dash %] Jump to the next 5+ move<br/>
-        0 [% dash %] Go to the first move<br/>
-        9 [% dash %] Go to the last move<br/>
-	m [% dash %] Off clock timer</h4>
+    <hr>
+    <h2>* Shortcuts</h2>
+    <h4>
+    [right-arrow] [% dash %] Go to the next move<br/>
+    [left-arrow] [% dash %] Go to the previous move<br/>
+    [up-arrow] [% dash %] Jump to the previous 5- move<br/>
+    [down-arrow] [% dash %] Jump to the next 5+ move<br/>
+    0 [% dash %] Go to the first move<br/>
+    9 [% dash %] Go to the last move<br/>
+    m [% dash %] Off clock timer</h4>
     </div></center>
 
     <!-- copyright -->
