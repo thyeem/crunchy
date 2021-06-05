@@ -11,7 +11,6 @@ $(document).ready(function() {
     $body = $('body');
     $view = $('#view');
     $bcf = $('#bcf');
-    $sec = $('#sec');
     $locked = $('#locked');
     $id = $('#id');
     $pB = $('input[type=radio][name=pB]');
@@ -24,19 +23,15 @@ $(document).ready(function() {
     $y = $('#y');
     $moves = $('#moves');
     $turn = $('#turn');
-    $bell = $('#bell');
-    $bell_switch = $('#bell-switch');
     $bcf_switch = $('#bcf-switch');
     $bcf_mode = $('#bcf-mode');
     $save = $('#save');
     $black_wp = $('#black-wp');
     $white_wp = $('#white-wp');
-    $counter = $('#counter');
     $do = $('#do');
     $go = $('#go');
     $form = $('#form');
     $board = $('#board');
-    $timer = $('#timer');
     $float_div = $('.float-div');
     $msg_div = $('#msg-div');
     $key_div = $('#key-div');
@@ -48,7 +43,6 @@ $(document).ready(function() {
     $forth = $('#forth');
     $undo = $('#undo');
     $replay = $('#replay');
-    $title = $('#title');
     $spinner = $('#spinner');
 
     // define-init global var ------------------------------
@@ -64,7 +58,6 @@ $(document).ready(function() {
     _view = (_view) ? _view.split(':') : _view;
     _id = $id.val();
     _bcf = +$bcf.val();
-    _sec = +$sec.val();
     _locked = +$locked.val();
     _pB = $pBset.val();
     _pW = $pWset.val();
@@ -74,10 +67,6 @@ $(document).ready(function() {
     _y = +$y.val();
     _moves = +$moves.val();
     _turn = $turn.val();
-    //_bellOn = (_locked) ? 0 : 1;
-    _bellOn = 0;
-    _flash = null;
-    _counter = null;
     _xhr = null;
     _pBai = 0;
     _pWai = 0;
@@ -114,7 +103,6 @@ $(document).ready(function() {
         $pB.filter('[value=' + _pB + ']').prop("checked",true);
         $pW.filter('[value=' + _pW + ']').prop("checked",true);
         (_bcf)? toggle_bcf(1) : toggle_bcf(0);
-        // (_bellOn)? toggle_bell(1) : toggle_bell(0);
     }
 
     function render_EWP() {
@@ -131,52 +119,6 @@ $(document).ready(function() {
     function overlapped(x, y) {
         if (_view[NL * (x-1) + (y-1)] === EMPTY) return false;
         else return true;
-    }
-
-    // clock-timer
-    function set_timer() {
-        if (_locked || !_bellOn) return false;
-        _counter = setInterval(update_counter, 1000);
-    }
-
-    function update_counter() {
-        if (_locked || !_bellOn) return false;
-        if (_sec > 0 ) $counter.html(--_sec);
-        flash_screen();
-
-        // when time's up
-        if (_sec <= 0) {
-            var whowon = (_turn === BLACK) ? "White" : "Black";
-            alert('Oops! Time\'s up. ' + whowon + ' won.');
-            if (_counter) clearInterval(_counter);
-            if (_flash) clearInterval(_flash);
-            _locked = 1;
-        }
-        return false;
-    }
-
-    function flash_screen() {
-        if (_sec === 10) {
-            _flash = setInterval(function() {
-                $body.toggleClass('flash')
-            }, 400);
-        }
-    }
-
-    function toggle_bell(m) {
-        if (m === undefined) {
-            _bellOn = (_bellOn)? 0 : 1;
-            $bell.toggleClass("fa-bell");
-            $bell.toggleClass("fa-bell-slash");
-        } else if (m === 1) {
-            _bellOn = 1;
-            $bell.removeClass();
-            $bell.addClass('fa fa-bell');
-        } else {
-            _bellOn = 0;
-            $bell.removeClass();
-            $bell.addClass('fa fa-bell-slash');
-        }
     }
 
     function toggle_bcf(m) {
@@ -197,8 +139,6 @@ $(document).ready(function() {
 
     function do_before_submit() {
         $bcf.val(_bcf);
-        if (_counter) clearInterval(_counter);
-        if (_flash) clearInterval(_flash);
     }
 
     function goto_move(n) {
@@ -322,7 +262,6 @@ $(document).ready(function() {
     $save.click(function() {
         $msg_div.fadeIn();
         $msg.focus();
-        toggle_bell(0);
         return false;
     });
 
@@ -365,7 +304,6 @@ $(document).ready(function() {
     // toggle replay list
     $replay.click(function() {
         $rp_list.fadeToggle();
-        toggle_bell(0);
         return false;
     });
 
@@ -396,12 +334,6 @@ $(document).ready(function() {
         return false;
     });
 
-    // counter switch
-    $timer.click(function() {
-        toggle_bell();
-        return false;
-    });
-
     // submit nav-back
     $back.click(function() {
         if (!_locked) return false;
@@ -417,16 +349,12 @@ $(document).ready(function() {
     });
 
     //------------------------------------------
-    // mouse middle button event: pause counter
-    $(document).mousedown(function(e) {
-        if (e.which === 2) {
-            $timer.trigger('click');
-        }
-    });
 
-    // left/right arrow key trigger
-    $body.one('keydown', function(e) {
+    // shortcut: key triggers
+    $body.on('keydown', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+
         if (e.which === 37) {
             goto_move(_moves-1);
         } else if (e.which === 39) {
@@ -439,13 +367,20 @@ $(document).ready(function() {
             goto_move(0);
         } else if (e.which === 57) {
             goto_move(361);
-        } else if (e.which === 77) {
-            toggle_bell(0);
+        } else if (e.which === 78) {
+            document.getElementById('new-game').click();
+        } else if (e.which === 84) {
+            document.getElementById('bcf-mode').click();
+        } else if (e.which === 85) {
+            document.getElementById('undo').click();
+        } else if (e.which === 76) {
+            document.getElementById('replay').click();
+        } else if (e.which === 83) {
+            document.getElementById('save').click();
         }
     });
 
     // run-run-run -----------------------------------------
-    // set_timer();
     render_header();
     render_EWP();
     render_board();

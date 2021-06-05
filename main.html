@@ -30,7 +30,7 @@
 
             <!-- new game -->
             <div class="menu" title="New Game">
-                <a href="./">
+                <a href="./" id="new-game">
                 <i class="fa fa-delicious" style="color:#3152a5"></i>
                 </a> [% L %][% M %]
             </div>
@@ -65,25 +65,6 @@
                 </div>
             </div>
 
-            <!-- counter -->
-            <!-- div class="menu_timer" title="Toggle Counter">
-                <a href="#" id="timer">
-                <i class="fa fa-bell" id="bell" style="color:#ffff9c"></i>
-                <span id="counter">[% timeout %]</span>
-                </a> [% M %]
-            </div-->
-
-            <!-- Move nav -->
-            <!--div class="menu" title="Navigator / # of Moves">
-                <a href="#" id="back">
-                <i class="fa fa-arrow-left" style="color:#3152a5"></i>
-                </a>
-                [% M %][% board.moves %][% M %]
-                <a href="#" id="forth">
-                <i class="fa fa-arrow-right" style="color:#3152a5"></i>
-                </a> [% M %]
-            </div-->
-
             <!-- undo -->
             <div class="menu" title="Undo Last Move">
                 <a href="#" id="undo">
@@ -96,13 +77,6 @@
         <center><div style="margin: 5px;">
             <!-- players / victory Points -->
             <div class="menu_id_score" title="Player's Stones and Victory Points">
-                <!--select id="pB" name="pB" class="select-player">
-                    <option value="human">&#9679; Human</option>
-                    <option value="sofia">&#9679; SofiAI</option>
-                    <option value="maria">&#9679; MariAI</option>
-                </select-->
-
-
                 <label>
                     <input type="radio" name="pB" value="human" checked>
                     <img class="player-avatar" src="img/id_human.png">
@@ -115,6 +89,7 @@
                     <input type="radio" name="pB" value="maria">
                     <img class="player-avatar" src="img/id_maria.png">
                 <label>
+
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
                 <img class="stones" src="img/30px/black.png">
                 [% M %][% board.scoreB %]
@@ -122,12 +97,6 @@
                 <img class="stones" src="img/30px/white.png">
                 [% M %][% board.scoreW %]
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
-
-                <!--select id="pW" name="pW" class="select-player">
-                    <option value="human">&#9675; Human</option>
-                    <option value="sofia">&#9675; SofiAI</option>
-                    <option value="maria">&#9675; MariAI</option>
-                </select-->
 
                 <label>
                     <input type="radio" name="pW" value="human" checked>
@@ -165,7 +134,6 @@
         <input type="hidden" id="EMPTY" value="[% EMPTY %]">
         <input type="hidden" id="UNIT" value="[% UNIT %]">
         <input type="hidden" id="NL" value="[% NL %]">
-        <input type="hidden" id="sec" value="[% timeout %]">
         <input type="hidden" id="locked" value="[% locked %]">
         <input type="hidden" id="view" value="[% view %]">
         <input type="hidden" id="alert" value="[% alert %]">
@@ -204,7 +172,7 @@
     <hr>
     <h2>* Playing with AI [% L %] <img class="avatar" src="img/id_sofia.png">[% M %]<img class="avatar" src="img/id_maria.png"></h2>
     <h4>Francis created some AI applications for this game [% dash %]
-    SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/>
+    SofiAI and MariAI [% dash %] Just select one from AI avatars to play with.<br/>
     Enjoy the time with them.</h4>
 
     <hr>
@@ -214,20 +182,11 @@
     <h4><i class="fa fa-delicious" style="color:#3152a5;font-size:30px;vertical-align:middle;"></i>
     [% L %] Start a new game</h4>
     <h4><i class="fa fa-send" style="color:#31b5d6;font-size:28px;vertical-align:middle;"></i>
-    [% L %] Save the most recent game played</h4>
+    [% L %] Save the game that is playing now</h4>
     <h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:30px;vertical-align:middle;"></i>
-    [% L %] Load and replay the game list saved</h4>
+    [% L %] Load the saved game list to replay</h4>
     <h4><i class="fa fa-undo" style="color:#ff6342;font-size:30px;vertical-align:middle;"></i>
-    [% L %] Undo last move on the game plyaing</h4>
-
-    <!--
-        <i class="fa fa-bell" style="color:#ffff9c;font-size:24px"></i>
-        [% L %]
-        Toggle clock timer (time per move: 120 secs by default)<br/>
-        <i class="fa fa-arrow-right" style="color:#3152a5;font-size:24px"></i>
-        [% L %]
-        Move back and forth (only activated in the finished game)<br/>
-    -->
+    [% L %] Undo last move played</h4>
     <h4><img src="img/spinner.svg" style="height:24px;vertical-align:middle;">
     [% L %] Indicating AI is thinking</h4>
 
@@ -243,13 +202,18 @@
     <hr>
     <h2>* Shortcuts</h2>
     <h4>
+    (All in lowercase)<br/>
+    n [% dash %] Start a new game<br/>
+    u [% dash %] Undo last move played<br/>
+    t [% dash %] Toggle the Crunchy mode<br/>
+    l [% dash %] Show the saved game list<br/>
+    s [% dash %] Save the game now playing<br/>
+    0 [% dash %] Go to the first move<br/>
+    9 [% dash %] Go to the last move<br/>
     [right-arrow] [% dash %] Go to the next move<br/>
     [left-arrow] [% dash %] Go to the previous move<br/>
     [up-arrow] [% dash %] Jump to the previous 5- move<br/>
     [down-arrow] [% dash %] Jump to the next 5+ move<br/>
-    0 [% dash %] Go to the first move<br/>
-    9 [% dash %] Go to the last move<br/>
-    m [% dash %] Off clock timer</h4>
     </div></center>
 
     <!-- copyright -->
