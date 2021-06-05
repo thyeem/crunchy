@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=0.9,
-                                   maximum-scale=1.0, minimum-scale=0.9">  
+                                   maximum-scale=1.0, minimum-scale=0.9">
     <link rel="stylesheet" href="[% css_fa %]">
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
@@ -24,7 +24,7 @@
 			<!-- Crunchy mode -->
 			<div class="menu" title="Goggle Crunchy Mode">
 				<a href="#" id="bcf-mode">
-				<i class="fa fa-toggle-on" id="bcf-switch"   
+				<i class="fa fa-toggle-on" id="bcf-switch"
 				   style="color:#299c39;font-size:46px"></i>
 				</a> [% L %]
 			</div>
@@ -35,7 +35,7 @@
 				<i class="fa fa-delicious" style="color:#3152a5"></i>
 				</a> [% L %][% M %]
 			</div>
-			
+
 			<!-- replay -->
 			<div class="menu" title="Replay the Saved Games">
 				<a href="#" id="replay">
@@ -89,7 +89,7 @@
 			<div class="menu" title="Undo Last Move">
 				<a href="#" id="undo">
 				<i class="fa fa-undo" style="color:#ff6342;font-size:44px"></i>
-				</a> 
+				</a>
 				[% L %]
 			</div>
 		</div></center>
@@ -139,7 +139,7 @@
         <input type="hidden" id="pBset" value="[% pB %]">
         <input type="hidden" id="pWset" value="[% pW %]">
         <input type="hidden" id="did" name="did">
-    </form></div>  
+    </form></div>
 
 
     <!-- winning probability -->
@@ -158,24 +158,24 @@
     <div id="help">
 	<h2>* What's this game?</h2>
 	<h4>Crunchy [% dash %] A brand new game created by Francis.<br/>
-	He wanted to change "Gomoku" with a more complex rule.</h4>
+	He wanted to make <a href="https://en.wikipedia.org/wiki/Gomoku">Omok (a.k.a. Gomoku)</a> more interesting by adding a very simple rule [% dash %] Crunchy rule.</h4>
+
+	<hr>
+	<h2>* Rule</h2>
+    <h4><u>Crunchy rule</u> [% dash %] One can clamp the enemy's two successive stones
+    in any directions if any. Feel free to capture those stones.<br/><br/>
+    (1) Firstly makes five stones in a row [% dash %]> victory<br/>
+    (2) Getting 10 captured stones [% dash %]> victory</h4>
 
 	<hr>
         <h2>* Playing with AI</h2>
 	<h4>Francis created some AI applications for this game [% dash %]
-        SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/> 
+        SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/>
 	Enjoy the time with them.</h4>
 
 	<hr>
-	<h2>* Rule</h2>
-        <h4><u>Crunchy rule</u>: One can clamp the enemy's two successive stones
-        in any directions if any [% dash %] then capture those stones.<br/>
-        (1) firstly makes five stones in a row [% dash %] victory<br/>
-	(2) 10 captured stones [% dash %] victory</h4>
-
-	<hr>
 	<h2>* Menu</h2>
-	<h4><i class="fa fa-toggle-on" style="color:#299c39;font-size:26px"></i> 
+	<h4><i class="fa fa-toggle-on" style="color:#299c39;font-size:26px"></i>
 	[% L %] Toggle Crunchy game mode. (See the Crunchy rule above)</h4>
 	<h4><i class="fa fa-delicious" style="color:#3152a5;font-size:26px"></i>
 	[% L %] Start a new game</h4>
@@ -222,7 +222,7 @@
     Crunchy [% dash %] (c) 2017-2021 Francis.
 </div>
 
-<!-- popup msg --> 
+<!-- popup msg -->
 [% IF alert %]
 <script>setTimeout(function() { alert("[% alert %]") }, 300);</script>
 [% END %]

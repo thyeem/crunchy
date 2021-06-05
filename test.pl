@@ -1,13 +1,13 @@
+#!/usr/bin/perl -I/home/ubuntu/perl5/lib/perl5
 
 use feature qw/ say /;
 use Storable qw / lock_nstore lock_retrieve /;
-use IPC::Run qw/ run timeout /;
-use Digest::SHA qw/ sha1_hex /;
+use Data::Dump qw/ dump /;
+
+BEGIN { unshift @INC, '.'; }
 use BCF::Board;
 use BCF::Game;
 use BCF::Config;
-use Data::Dump qw/ dump /;
-## use constant N => 19;
 
 sub print_sav {
     my $db = lock_retrieve 'sav/game.list';

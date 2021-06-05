@@ -94,7 +94,7 @@ $(document).ready(function() {
             _context = $board[0].getContext('2d');
             _context.drawImage(_board, 0, 0, 570, 570);
             if (!_view) return;
-            for (var n = 0; n < NL*NL; n++) { 
+            for (var n = 0; n < NL*NL; n++) {
                 if (_y < 0 || _x < 0) break;
                 if (_view[n] === EMPTY) continue;
                 var i = parseInt(n / NL);
@@ -115,7 +115,7 @@ $(document).ready(function() {
         $pB.val(_pB);
         $pW.val(_pW);
         (_bcf)? toggle_bcf(1) : toggle_bcf(0);
-        (_bellOn)? toggle_bell(1) : toggle_bell(0); 
+        (_bellOn)? toggle_bell(1) : toggle_bell(0);
     }
 
     function render_EWP() {
@@ -126,7 +126,7 @@ $(document).ready(function() {
         _eB = (+_eB > 7) ? _eB+'%' : '';
         _eW = (+_eW > 7) ? _eW+'%' : '';
         $black_wp.text(_eB);
-        $white_wp.text(_eW);    
+        $white_wp.text(_eW);
     }
 
     function overlapped(x, y) {
@@ -234,7 +234,7 @@ $(document).ready(function() {
         _xhr = $.ajax({
             type: 'post',
             url: 'ajax_api.pl',
-            timeout: 40000,
+            timeout: 60000,
             data: {'id': _id, 'bcf': _bcf, 'turn': _turn, 'agent': agent},
         })
         .fail(function(req, status, msg) {
@@ -286,10 +286,10 @@ $(document).ready(function() {
     $pW.change(function() {
         if (_xhr) _xhr.abort();
         if (_locked) return false;
-        if (_pWai) return false; 
+        if (_pWai) return false;
         _pW = $pW.val();
         if (_turn === WHITE && _pW !== HUMAN) _pWai = 1;
-        if (_pWai) { 
+        if (_pWai) {
             ajax_let_AIs_play();
             $(this).off('click');
             $spinner.fadeIn();
@@ -299,7 +299,7 @@ $(document).ready(function() {
 
     // submit event handler --------------------------------------
     // clicking board
-    $board.click(function(e) {  
+    $board.click(function(e) {
         if (_locked || _pBai || _pWai) return false;
         var offset_t = $(this).offset().top - $(window).scrollTop();
         var offset_l = $(this).offset().left - $(window).scrollLeft();
@@ -312,14 +312,14 @@ $(document).ready(function() {
         $form.trigger('submit');
         return false;
     });
-    
+
     // bcf mode switch
     $bcf_mode.click(function() {
         toggle_bcf();
         return false;
     });
-    
-    // toggle save input 
+
+    // toggle save input
     $save.click(function() {
         $msg_div.fadeIn();
         $msg.focus();
@@ -344,7 +344,7 @@ $(document).ready(function() {
             return false;
         }
     });
-    
+
     // pwd submit
     $pwd.keydown(function(e) {
         if (e.which === 13) {
@@ -362,7 +362,7 @@ $(document).ready(function() {
         $key_div.hide();
         return false;
     });
-   
+
     // toggle replay list
     $replay.click(function() {
         $rp_list.fadeToggle();
@@ -378,7 +378,7 @@ $(document).ready(function() {
         return false;
     });
 
-    // toggle delete replay item 
+    // toggle delete replay item
     $('.rp-del').click(function() {
         $do.val('delete');
         $did.val($(this).attr('id'));
@@ -387,7 +387,7 @@ $(document).ready(function() {
         $pwd.focus();
     });
 
-    // submit undo 
+    // submit undo
     $undo.click(function() {
         if (_pBai || _pWai) return false;
         $do.val('undo');
@@ -402,15 +402,15 @@ $(document).ready(function() {
         toggle_bell();
         return false;
     });
-    
+
     // submit nav-back
     $back.click(function() {
         if (!_locked) return false;
         goto_move(_moves-1);
         return false;
     });
-    
-    // submit nav-forth 
+
+    // submit nav-forth
     $forth.click(function() {
         if (!_locked) return false;
         goto_move(_moves+1);
@@ -421,7 +421,7 @@ $(document).ready(function() {
     // mouse middle button event: pause counter
     $(document).mousedown(function(e) {
         if (e.which === 2) {
-            $timer.trigger('click'); 
+            $timer.trigger('click');
         }
     });
 
@@ -443,7 +443,7 @@ $(document).ready(function() {
             toggle_bell(0);
         }
     });
-    
+
     // run-run-run -----------------------------------------
     // set_timer();
     render_header();

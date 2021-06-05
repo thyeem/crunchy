@@ -1,4 +1,4 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl -I/home/ubuntu/perl5/lib/perl5
 
 use strict;
 use warnings;

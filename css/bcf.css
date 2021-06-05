@@ -1,10 +1,10 @@
-section, article, aside, footer, header, nav, hgroup { 
+section, article, aside, footer, header, nav, hgroup {
     display: block;
 }
 
 body {
     font-size: 16px;
-    font-family: 'Alegreya SC'; 
+    font-family: 'Alegreya SC';
     color: #505260;
     background-color: #e3e4fa;
 }
@@ -14,9 +14,9 @@ canvas {
 }
 
 a {
-    color: #505260; 
-    margin: 0; 
-    padding: 0; 
+    color: #505260;
+    margin: 0;
+    padding: 0;
     text-decoration: none;
 }
 
@@ -42,7 +42,7 @@ textarea:focus, input:focus{
     font-size: 40px;
 }
 
-.flash { 
+.flash {
     background-color: #efefef;
 }
 
@@ -77,7 +77,7 @@ textarea:focus, input:focus{
     width: 400px;
 }
 
-.select-player { 
+.select-player {
     display: inline;
 	font-size:18px;
     font-family: 'Alegreya SC';
@@ -92,23 +92,23 @@ textarea:focus, input:focus{
     background-color: #fff;
 }
 
-#wrapper { 
+#wrapper {
     margin: 0 auto;
     text-align: center;
     vertical-align: middle;
 }
 
 #board {
-    padding-top: 3px; 
+    padding-top: 3px;
     text-align: center;
 }
 
 #header {
-    margin: 0 auto; 
+    margin: 0 auto;
     margin-top: 21px;
-    vertical-align: middle; 
-    text-align: center; 
-    font-family: 'Alegreya SC'; 
+    vertical-align: middle;
+    text-align: center;
+    font-family: 'Alegreya SC';
     font-size: 20px;
     line-height: 1.4em;
 }
@@ -157,13 +157,21 @@ textarea:focus, input:focus{
     text-align: left;
 }
 
+#help a {
+    color: salmon;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+
 #rp-list {
     min-width: 370px;
+    max-width: 370px;
     width: 40%;
-    height: 70%;
+    height: 30%;
     padding: 6px 20px;
     text-align: left;
-} 
+}
 
 #pwd {
     width: 300px;
@@ -209,7 +217,7 @@ textarea:focus, input:focus{
     font-size: 16px;
 }
 
-#black-wp { 
+#black-wp {
     text-align: center;
     width: 50%;
     height: 100%;

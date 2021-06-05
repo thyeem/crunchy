@@ -1,11 +1,12 @@
-#!/usr/bin/perl  
+#!/usr/bin/perl -I/home/ubuntu/perl5/lib/perl5
 
 use strict;
 use warnings;
-use lib '/home/ubuntu/perl5/lib/perl5';
 use feature qw/ say /;
 use JSON;
 use CGI;
+
+BEGIN { unshift @INC, '.'; }
 use BCF::Game;
 use BCF::Config;
 
@@ -48,8 +49,8 @@ return if $x < 0 || $y < 0;
 
 # JSON response to ajax request --------------------
 my $json = JSON->new->utf8->pretty(1)->encode({
-    x => $x+1, 
-    y => $y+1, 
+    x => $x+1,
+    y => $y+1,
     eB => $eB,
     eW => $eW,
 });
