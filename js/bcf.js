@@ -427,6 +427,7 @@ $(document).ready(function() {
 
     // left/right arrow key trigger
     $body.one('keydown', function(e) {
+        e.preventDefault();
         if (e.which === 37) {
             goto_move(_moves-1);
         } else if (e.which === 39) {
