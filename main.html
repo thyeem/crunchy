@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9,
-                                   maximum-scale=1.0, minimum-scale=0.9">
+    <meta name="viewport" content="width=device-width,initial-scale=0.9,user-scaleable=yes">
     <link rel="stylesheet" href="[% css_fa %]">
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
@@ -22,7 +21,7 @@
     <form id="form" action="index.pl" method="[% method %]">
         <center><div style="margin: 5px;">
             <!-- Crunchy mode -->
-            <div class="menu" title="Goggle Crunchy Mode">
+            <div class="menu" title="Toggle Crunchy Mode">
                 <a href="#" id="bcf-mode">
                 <i class="fa fa-toggle-on" id="bcf-switch"
                    style="color:#299c39;font-size:46px"></i>
@@ -96,19 +95,53 @@
 
         <center><div style="margin: 5px;">
             <!-- players / victory Points -->
-            <div class="menu_score" title="Black/White Victory Points">
-                <select id="pB" name="pB" class="select-player">
+            <div class="menu_id_score" title="Player's Stones and Victory Points">
+                <!--select id="pB" name="pB" class="select-player">
                     <option value="human">&#9679; Human</option>
                     <option value="sofia">&#9679; SofiAI</option>
                     <option value="maria">&#9679; MariAI</option>
-                </select>
-                <b>[% board.scoreB %]</b> [% L %]
-                <select id="pW" name="pW" class="select-player">
+                </select-->
+
+
+                <label>
+                    <input type="radio" name="pB" value="human" checked>
+                    <img class="player-avatar" src="img/id_human.png">
+                <label>
+                <label>
+                    <input type="radio" name="pB" value="sofia">
+                    <img class="player-avatar" src="img/id_sofia.png">
+                <label>
+                <label>
+                    <input type="radio" name="pB" value="maria">
+                    <img class="player-avatar" src="img/id_maria.png">
+                <label>
+                [% M %]<span style="color:#d3d4e8">|</span>[% M %]
+                <img class="stones" src="img/30px/black.png">
+                [% M %][% board.scoreB %]
+                [% M %]
+                <img class="stones" src="img/30px/white.png">
+                [% M %][% board.scoreW %]
+                [% M %]<span style="color:#d3d4e8">|</span>[% M %]
+
+                <!--select id="pW" name="pW" class="select-player">
                     <option value="human">&#9675; Human</option>
                     <option value="sofia">&#9675; SofiAI</option>
                     <option value="maria">&#9675; MariAI</option>
-                </select>
-                <b>[% board.scoreW %]</b>
+                </select-->
+
+                <label>
+                    <input type="radio" name="pW" value="human" checked>
+                    <img class="player-avatar" src="img/id_human.png">
+                <label>
+                <label>
+                    <input type="radio" name="pW" value="sofia">
+                    <img class="player-avatar" src="img/id_sofia.png">
+                <label>
+                <label>
+                    <input type="radio" name="pW" value="maria">
+                    <img class="player-avatar" src="img/id_maria.png">
+                <label>
+
             </div>
         </div></center>
 
@@ -169,7 +202,7 @@
     (2) Firstly getting 10 captured stones [% dash %]> victory</h4>
 
     <hr>
-    <h2>* Playing with AI [% L %] <img id="avatar" src="img/id_sofia.png">[% M %]<img id="avatar" src="img/id_maria.png"></h2>
+    <h2>* Playing with AI [% L %] <img class="avatar" src="img/id_sofia.png">[% M %]<img class="avatar" src="img/id_maria.png"></h2>
     <h4>Francis created some AI applications for this game [% dash %]
     SofiAI and MariAI [% dash %] Just select one from the select-box to play.<br/>
     Enjoy the time with them.</h4>

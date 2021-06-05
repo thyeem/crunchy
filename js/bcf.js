@@ -14,8 +14,8 @@ $(document).ready(function() {
     $sec = $('#sec');
     $locked = $('#locked');
     $id = $('#id');
-    $pB = $('#pB');
-    $pW = $('#pW');
+    $pB = $('input[type=radio][name=pB]');
+    $pW = $('input[type=radio][name=pW]');
     $eB = $('#eB');
     $eW = $('#eW');
     $pBset = $('#pBset');
@@ -24,7 +24,6 @@ $(document).ready(function() {
     $y = $('#y');
     $moves = $('#moves');
     $turn = $('#turn');
-    $alert = $('#alert');
     $bell = $('#bell');
     $bell_switch = $('#bell-switch');
     $bcf_switch = $('#bcf-switch');
@@ -75,8 +74,8 @@ $(document).ready(function() {
     _y = +$y.val();
     _moves = +$moves.val();
     _turn = $turn.val();
-    _alert = $alert.val();
-    _bellOn = (_locked) ? 0 : 1;
+    //_bellOn = (_locked) ? 0 : 1;
+    _bellOn = 0;
     _flash = null;
     _counter = null;
     _xhr = null;
@@ -112,10 +111,10 @@ $(document).ready(function() {
 
     function render_header() {
         $spinner.hide();
-        $pB.val(_pB);
-        $pW.val(_pW);
+        $pB.filter('[value=' + _pB + ']').prop("checked",true);
+        $pW.filter('[value=' + _pW + ']').prop("checked",true);
         (_bcf)? toggle_bcf(1) : toggle_bcf(0);
-        (_bellOn)? toggle_bell(1) : toggle_bell(0);
+        // (_bellOn)? toggle_bell(1) : toggle_bell(0);
     }
 
     function render_EWP() {
@@ -273,7 +272,7 @@ $(document).ready(function() {
     $pB.change(function() {
         if (_xhr) _xhr.abort();
         if (_locked) return false;
-        _pB = $pB.val();
+        _pB = $pB.filter(':checked').val();
         if (_turn === BLACK && _pB !== HUMAN) _pBai = 1;
         if (_pBai) {
             ajax_let_AIs_play();
@@ -287,7 +286,7 @@ $(document).ready(function() {
         if (_xhr) _xhr.abort();
         if (_locked) return false;
         if (_pWai) return false;
-        _pW = $pW.val();
+        _pW = $pW.filter(':checked').val();
         if (_turn === WHITE && _pW !== HUMAN) _pWai = 1;
         if (_pWai) {
             ajax_let_AIs_play();
@@ -452,8 +451,8 @@ $(document).ready(function() {
     render_board();
 
     // trigger AI agents if needed
-    (_turn === BLACK) ? $pB.trigger('change')
-                      : $pW.trigger('change');
+    (_turn === BLACK) ? $pB.filter(':checked').trigger('change')
+                      : $pW.filter(':checked').trigger('change');
 
 }); // end of ready
 

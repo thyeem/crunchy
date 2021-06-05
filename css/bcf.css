@@ -38,6 +38,21 @@ textarea:focus, input:focus{
     content:attr(data-text)
 }
 
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio] + img {
+    cursor: pointer;
+}
+
+[type=radio]:checked + img {
+    border: 5px solid salmon;
+}
+
 .fa {
     font-size: 40px;
 }
@@ -68,13 +83,13 @@ textarea:focus, input:focus{
     width: 100px;
 }
 
-.menu_score {
+.menu_id_score {
     margin-bottom: 1px;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
 	font-size:24px;
-    width: 400px;
+    width: 600px;
 }
 
 .select-player {
@@ -192,21 +207,20 @@ textarea:focus, input:focus{
     font-size: 38px;
 }
 
-#avatar {
+.stones {
+    width: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.avatar {
     width: 55px;
     border-radius: 50%;
     vertical-align: middle;
 }
 
-#user-avatar-on {
-    width: 40px;
-    border-radius: 50%;
-    vertical-align: middle;
-    border: 3px solid salmon;
-}
-
-#user-avatar-off {
-    width: 40px;
+.player-avatar {
+    width: 45px;
     border-radius: 50%;
     vertical-align: middle;
 }
