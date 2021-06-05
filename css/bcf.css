@@ -153,9 +153,10 @@ textarea:focus, input:focus{
 }
 
 .float-box {
+    padding-top: 100px;
     background-color: #e8e8e8;
     border: solid 1px #666;
-    border-radius: 10px;
+    border-radius: 20px;
     line-height: 1.5em;
     color: #666;
     font-size: 16px;
