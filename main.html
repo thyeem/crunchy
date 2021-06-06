@@ -14,7 +14,10 @@
     <script src="[% js_hasher %]"></script>
     <title>[% title %]</title>
     <link href="https://fonts.googleapis.com/css?family=Alegreya:regular,bold,italic,bolditalic" rel="stylesheet">
-    <!--link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png"-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body>
@@ -95,16 +98,16 @@
             <div class="menu_id_score">
                 <label>
                     <input type="radio" name="pB" value="human" checked>
-                    <img class="player-avatar" src="img/id_human.png" title="Set Human as black player">
-                <label>
+                    <img class="player-avatar" src="img/id_human.png" id="b-human" title="Set Human as black player">
+                </label>
                 <label>
                     <input type="radio" name="pB" value="sofia">
-                    <img class="player-avatar" src="img/id_sofia.png" title="Set SofiAI as black player">
-                <label>
+                    <img class="player-avatar" src="img/id_sofia.png" id="b-sofia" title="Set SofiAI as black player">
+                </label>
                 <label>
                     <input type="radio" name="pB" value="maria">
-                    <img class="player-avatar" src="img/id_maria.png" title="Set MariAI as black player">
-                <label>
+                    <img class="player-avatar" src="img/id_maria.png" id="b-maria" title="Set MariAI as black player">
+                </label>
 
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
                 <img class="stones" src="img/30px/black.png" title="Black victory points">
@@ -116,16 +119,16 @@
 
                 <label>
                     <input type="radio" name="pW" value="human" checked>
-                    <img class="player-avatar" src="img/id_human.png" title="Set Human as white player">
-                <label>
+                    <img class="player-avatar" src="img/id_human.png" id="w-human" title="Set Human as white player">
+                </label>
                 <label>
                     <input type="radio" name="pW" value="sofia">
-                    <img class="player-avatar" src="img/id_sofia.png" title="Set SofiAI as white player">
-                <label>
+                    <img class="player-avatar" src="img/id_sofia.png" id="w-sofia" title="Set SofiAI as white player">
+                </label>
                 <label>
                     <input type="radio" name="pW" value="maria">
-                    <img class="player-avatar" src="img/id_maria.png" title="Set MariAI as white player">
-                <label>
+                    <img class="player-avatar" src="img/id_maria.png" id="w-maria" title="Set MariAI as white player">
+                </label>
 
             </div>
         </div>
@@ -224,16 +227,22 @@
     <h2>* Shortcuts</h2>
     <h4>
     Ctrl + n [% dash %] Start a new game<br/>
-    Ctrl + u [% dash %] Undo last move played<br/>
+    Ctrl + z [% dash %] Undo last move played<br/>
     Ctrl + t [% dash %] Toggle the Crunchy mode<br/>
     Ctrl + l [% dash %] Show the saved game list<br/>
     Ctrl + s [% dash %] Save the game now playing<br/>
+    Ctrl + 1 [% dash %] Set human as black player<br/>
+    Ctrl + 2 [% dash %] Set SofiAI as black player<br/>
+    Ctrl + 3 [% dash %] Set MariAI as black player<br/>
+    Ctrl + 4 [% dash %] Set human as white player<br/>
+    Ctrl + 5 [% dash %] Set SofiAI as white player<br/>
+    Ctrl + 6 [% dash %] Set MariAI as white player<br/>
     Ctrl + 0 [% dash %] Go to the first move<br/>
     Ctrl + 9 [% dash %] Go to the last move<br/>
-    Ctrl + [right-arrow] [% dash %] Go to the next move<br/>
-    Ctrl + [left-arrow] [% dash %] Go to the previous move<br/>
-    Ctrl + [up-arrow] [% dash %] Jump to the previous 5- move<br/>
-    Ctrl + [down-arrow] [% dash %] Jump to the next 5+ move<br/>
+    Alt + [right-arrow] [% dash %] Go to the next move<br/>
+    Alt + [left-arrow] [% dash %] Go to the previous move<br/>
+    Alt + [up-arrow] [% dash %] Jump to the previous 5- move<br/>
+    Alt + [down-arrow] [% dash %] Jump to the next 5+ move<br/>
     </div></center>
 
     <!-- copyright -->

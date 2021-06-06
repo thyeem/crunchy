@@ -344,20 +344,18 @@ $(document).ready(function() {
     });
 
     //------------------------------------------
-
-    // shortcut: key triggers
-
+    // shortcuts
     $body.on('keydown', function(e) {
-        if (_locked && e.ctrlKey && e.which === 37) {
+        if (_locked && e.altKey && e.which === 37) {
             e.preventDefault();
             goto_move(_moves-1);
-        } else if (_locked && e.ctrlKey && e.which === 39) {
+        } else if (_locked && e.altKey && e.which === 39) {
             e.preventDefault();
             goto_move(_moves+1);
-        } else if (_locked && e.ctrlKey && e.which === 38) {
+        } else if (_locked && e.altKey && e.which === 38) {
             e.preventDefault();
             goto_move(_moves-5);
-        } else if (_locked && e.ctrlKey && e.which === 40) {
+        } else if (_locked && e.altKey && e.which === 40) {
             e.preventDefault();
             goto_move(_moves+5);
         } else if (_locked && e.ctrlKey && e.which === 48) {
@@ -370,12 +368,24 @@ $(document).ready(function() {
             document.getElementById('new-game').click();
         } else if (e.ctrlKey && e.which === 84) {
             document.getElementById('bcf-mode').click();
-        } else if (e.ctrlKey && e.which === 85) {
+        } else if (e.ctrlKey && e.which === 90) {
             document.getElementById('undo').click();
         } else if (e.ctrlKey && e.which === 76) {
             document.getElementById('replay').click();
         } else if (e.ctrlKey && e.which === 83) {
             document.getElementById('save').click();
+        } else if (e.ctrlKey && e.which === 49) {
+                document.getElementById('b-human').click();
+        } else if (e.ctrlKey && e.which === 50) {
+                document.getElementById('b-sofia').click();
+        } else if (e.ctrlKey && e.which === 51) {
+                document.getElementById('b-maria').click();
+        } else if (e.ctrlKey && e.which === 52) {
+                document.getElementById('w-human').click();
+        } else if (e.ctrlKey && e.which === 53) {
+                document.getElementById('w-sofia').click();
+        } else if (e.ctrlKey && e.which === 54) {
+                document.getElementById('w-maria').click();
         }
     });
 
