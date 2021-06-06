@@ -5,7 +5,7 @@ package BCF::Game;
 use BCF::Board;
 use BCF::Config;
 use File::Path qw / make_path /;
-use Digest::SHA qw/ sha1_hex /;
+use Digest::SHA qw/ sha1_hex sha256_hex /;
 use Storable qw/ dclone lock_nstore lock_retrieve /;
 
 sub new {
@@ -154,10 +154,10 @@ sub make_move {
 }
 
 sub undo_move {
-    my $self = shift; 
+    my $self = shift;
     my $moves = $self->{board}{moves};
     return if $moves < 1;
-    $self->goto_move($moves-1); 
+    $self->goto_move($moves-1);
     pop @{ $self->{log} };
 }
 
@@ -175,7 +175,7 @@ sub goto_move {
     my ($self, $n) = @_;
     return if $n < 0;
     $n = ($n > @{ $self->{log} }) ? @{ $self->{log} } : $n;
-    if ( $n == 0 ) { 
+    if ( $n == 0 ) {
         $self->{board} = BCF::Board->new;
         ($self->{pB}, $self->{pW}) = (HUMAN, HUMAN);
         ($self->{eB}, $self->{eW}) = (undef, undef);

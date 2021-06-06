@@ -25,6 +25,7 @@ $(document).ready(function() {
     $turn = $('#turn');
     $bcf_switch = $('#bcf-switch');
     $bcf_mode = $('#bcf-mode');
+    $lock_status = $('#game-status-lock');
     $save = $('#save');
     $black_wp = $('#black-wp');
     $white_wp = $('#white-wp');
@@ -73,6 +74,7 @@ $(document).ready(function() {
 
     //------------------------------------------------------
     // render board and stones
+
     function render_board() {
         _board = new Image();
         _black = new Image();
@@ -103,6 +105,7 @@ $(document).ready(function() {
         $pB.filter('[value=' + _pB + ']').prop("checked",true);
         $pW.filter('[value=' + _pW + ']').prop("checked",true);
         (_bcf)? toggle_bcf(1) : toggle_bcf(0);
+        lock_status(_locked);
     }
 
     function render_EWP() {
@@ -121,6 +124,17 @@ $(document).ready(function() {
         else return true;
     }
 
+    function lock_status(status) {
+        if (status) {
+            $lock_status.removeClass();
+            $lock_status.addClass('fa fa-lock');
+
+        } else {
+            $lock_status.removeClass();
+            $lock_status.addClass('fa fa-unlock');
+        }
+    }
+
     function toggle_bcf(m) {
         if (m === undefined) {
             _bcf = _bcf ? 0 : 1;
@@ -137,34 +151,20 @@ $(document).ready(function() {
         }
     }
 
-    function do_before_submit() {
+    function do_submit() {
         $bcf.val(_bcf);
+        $form.trigger('submit');
+        return false;
     }
 
     function goto_move(n) {
         if (!_locked) return false;
         $do.val('replay');
         $go.val((n < 0)? 0 : n);
-        $form.trigger('submit');
+        do_submit();
+//         $form.trigger('submit');
     }
 
-    // manual submit redefined
-    $form.submit(function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: $form.attr('method'),
-            url: $form.attr('action'),
-            data: $form.serialize(),
-            dataType: 'html',
-        })
-        .done(function(data) {
-            var d = document.open("text/html", "replace");
-            d.write(data);
-            d.close();
-            return false;
-        })
-        return false;
-    });
 
     // ajax calling for AI
     function ajax_let_AIs_play() {
@@ -186,8 +186,7 @@ $(document).ready(function() {
             if (res['eB']) $eB.val(res['eB']);
             if (res['eW']) $eW.val(res['eW']);
             $spinner.fadeOut();
-            do_before_submit();
-            $form.trigger('submit');
+            do_submit();
             return false;
         });
     }
@@ -247,8 +246,7 @@ $(document).ready(function() {
         if (overlapped(x, y)) return false;
         $x.val(x);
         $y.val(y);
-        do_before_submit();
-        $form.trigger('submit');
+        do_submit();
         return false;
     });
 
@@ -286,9 +284,10 @@ $(document).ready(function() {
     // pwd submit
     $pwd.keydown(function(e) {
         if (e.which === 13) {
-            $pwd.val(hex_sha1($pwd.val()));
-            do_before_submit();
-            $form.trigger('submit');
+//             alert($pwd.val());
+//             alert(sha256($pwd.val()));
+            $pwd.val(sha256($pwd.val()));
+            do_submit();
             return false;
         }
     });
@@ -329,8 +328,7 @@ $(document).ready(function() {
         if (_pBai || _pWai) return false;
         $do.val('undo');
         $go.val(_moves-1);
-        do_before_submit();
-        $form.trigger('submit');
+        do_submit();
         return false;
     });
 
@@ -351,31 +349,35 @@ $(document).ready(function() {
     //------------------------------------------
 
     // shortcut: key triggers
-    $body.on('keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
 
-        if (e.which === 37) {
+    $body.on('keydown', function(e) {
+        if (_locked && e.which === 37) {
+            e.preventDefault();
             goto_move(_moves-1);
-        } else if (e.which === 39) {
+        } else if (_locked && e.which === 39) {
+            e.preventDefault();
             goto_move(_moves+1);
-        } else if (e.which === 38) {
+        } else if (_locked && e.which === 38) {
+            e.preventDefault();
             goto_move(_moves-5);
-        } else if (e.which === 40) {
+        } else if (_locked && e.which === 40) {
+            e.preventDefault();
             goto_move(_moves+5);
-        } else if (e.which === 48) {
+        } else if (_locked && e.which === 48) {
+            e.preventDefault();
             goto_move(0);
-        } else if (e.which === 57) {
+        } else if (_locked && e.which === 57) {
+            e.preventDefault();
             goto_move(361);
-        } else if (e.which === 78) {
+        } else if (e.ctrlKey && e.which === 78) {
             document.getElementById('new-game').click();
-        } else if (e.which === 84) {
+        } else if (e.ctrlKey && e.which === 84) {
             document.getElementById('bcf-mode').click();
-        } else if (e.which === 85) {
+        } else if (e.ctrlKey && e.which === 85) {
             document.getElementById('undo').click();
-        } else if (e.which === 76) {
+        } else if (e.ctrlKey && e.which === 76) {
             document.getElementById('replay').click();
-        } else if (e.which === 83) {
+        } else if (e.ctrlKey && e.which === 83) {
             document.getElementById('save').click();
         }
     });

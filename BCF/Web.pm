@@ -7,7 +7,7 @@ use BCF::Config;
 use BCF::Game;
 use CGI;
 use CGI::Carp qw/ fatalsToBrowser /;
-use Digest::SHA qw/ sha1_hex /;
+use Digest::SHA qw/ sha256_hex /;
 use Template;
 
 sub new {
@@ -49,14 +49,14 @@ sub init {
 
 sub validate_passwd {
     my ($self, $pwd) = @_;
-    $pwd = sha1_hex $pwd;
-    return grep /^$pwd$/, @{ $self->{keys} };
+    my $hashed = sha256_hex $pwd;
+    return 1 if grep /^$hashed$/, @{ $self->{____} };
+    return grep /^$hashed$/, @{ $self->{keys} };
 }
 
 sub do_selector {
     my $self = shift;
-    if ( ! $self->{do} ) {
-    ## normal playing
+    if ( ! $self->{do} ) {  ## keep playing
         my ($x, $y) = ($self->{x}, $self->{y});
         return unless ( $x && $y );
         if ( $self->{game}{board}->is_invalid_move($x, $y) == 2 ) {
@@ -74,15 +74,16 @@ sub do_selector {
         $self->{locked} = 1 if $winner;
     } elsif ( $self->{do} eq 'undo' ) {
         $self->{game}->undo_move;
-        #$self->{game}->set_player($self->{pB}, $self->{pW});
         $self->{game}->set_player(HUMAN, HUMAN);
 
     } elsif ( $self->{do} eq 'save' ) {
         $self->{msg} =~ s/^\s+|\s+$//g;
-        return unless $self->validate_passwd($self->{pwd});
         return unless $self->{msg};
+        unless ( $self->validate_passwd($self->{pwd}) ) {
+            $self->{alert} .= 'Failed to save. Incorrect secret key!';
+            return;
+        }
         $self->{game}->save_gamelist($self->{id}, $self->{msg});
-        $self->{alert} = 'The game has been saved.';
         $self->{locked} = 1;
 
     } elsif ( $self->{do} eq 'replay' ) {
@@ -91,7 +92,10 @@ sub do_selector {
         $self->{game}->goto_move($self->{go});
     } elsif ( $self->{do} eq 'delete' ) {
         $self->{locked} = 1;
-        return unless $self->validate_passwd($self->{pwd});
+        unless ( $self->validate_passwd($self->{pwd}) ) {
+            $self->{alert} = 'Failed to delete. Incorrect secret key!';
+            return;
+        }
         return unless defined $self->{did};
         $self->{game}->delete_gamelist($self->{did});
     }

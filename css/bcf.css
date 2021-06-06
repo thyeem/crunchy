@@ -3,8 +3,8 @@ section, article, aside, footer, header, nav, hgroup {
 }
 
 body {
-    font-size: 16px;
-    font-family: 'Alegreya SC';
+    font-family: 'Alegreya';
+    font-size: 18px;
     color: #505260;
     background-color: #e3e4fa;
 }
@@ -57,10 +57,6 @@ textarea:focus, input:focus{
     font-size: 40px;
 }
 
-.flash {
-    background-color: #efefef;
-}
-
 .menu {
     display: inline-block;
     text-align: center;
@@ -68,43 +64,13 @@ textarea:focus, input:focus{
 
 }
 
-.menu_timer {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-	font-size:24px;
-}
-
-.menu_nav {
-    display: inline-block;
-    margin-bottom: -3px;
-    text-align: left;
-    vertical-align: middle;
-    width: 100px;
-}
-
 .menu_id_score {
     margin-bottom: 1px;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-	font-size:24px;
-    width: 600px;
-}
-
-.select-player {
-    display: inline;
-	font-size:18px;
-    font-family: 'Alegreya SC';
-    color: #444;
-    padding: 2px;
-    margin: 2px;
-    border-radius: .8em;
-    outline: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #fff;
+	font-size: 28px;
+    font-weight: 700;
 }
 
 #wrapper {
@@ -113,17 +79,22 @@ textarea:focus, input:focus{
     vertical-align: middle;
 }
 
+.l-block {
+    margin-top: 5px;
+    min-width: 570px;
+}
+
 #board {
     padding-top: 3px;
     text-align: center;
 }
 
 #header {
-    margin: 0 auto;
-    margin-top: 21px;
-    vertical-align: middle;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    font-family: 'Alegreya SC';
+    vertical-align: middle;
+    font-family: 'Alegreya';
     font-size: 20px;
     line-height: 1.4em;
 }
@@ -140,10 +111,6 @@ textarea:focus, input:focus{
     opacity: 0.4;
 }
 
-#counter {
-    display: inline;
-}
-
 .float-div {
     position: fixed;
     margin: 0 auto;
@@ -153,23 +120,23 @@ textarea:focus, input:focus{
 }
 
 .float-box {
-    padding-top: 100px;
+    margin-top: 100px;
     background-color: #e8e8e8;
     border: solid 1px #666;
-    border-radius: 20px;
+    border-radius: 10px;
     line-height: 1.5em;
     color: #666;
     font-size: 16px;
-    font-family: 'Alegreya SC';
+    font-family: 'Alegreya';
     overflow: scroll;
 
 }
 
 #help {
-    min-width: 400px;
+    min-width: 500px;
     width: 40%;
     height: 70%;
-    padding: 6px 20px;
+    padding-left: 20px;
     text-align: left;
 }
 
@@ -180,11 +147,21 @@ textarea:focus, input:focus{
     text-decoration: underline;
 }
 
+#help h2 {
+    font-family: 'Alegreya';
+    font-weight: 700;
+}
+
+#help h4 {
+    font-family: 'Alegreya';
+    font-weight: 600;
+}
+
 #rp-list {
-    min-width: 370px;
-    max-width: 370px;
-    width: 40%;
-    height: 30%;
+    min-width: 400px;
+    max-width: 400px;
+    width: 50%;
+    height: 40%;
     padding: 6px 20px;
     text-align: left;
 }
@@ -199,13 +176,6 @@ textarea:focus, input:focus{
     width: 300px;
     height: 1.5em;
     padding: 5px 20px;
-}
-
-#title {
-    margin-bottom:5px;
-    margin-top:0;
-    font-family: 'Alegreya SC';
-    font-size: 38px;
 }
 
 .stones {

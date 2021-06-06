@@ -26,6 +26,7 @@ sub new {
         css_fa     => 'css/font-awesome.min.css',
         js_bcf     => 'js/bcf.js',
         js_jquery  => 'js/jquery-3.4.1.min.js',
+        js_hasher  => 'js/sha256.js',
         letter     => 'xxxxx.dat',
         S          => '&nbsp;',
         M          => '&ensp;',
@@ -34,10 +35,12 @@ sub new {
         method     => 'post',
         cgi        => undef,
         game       => undef,
+        ____       => [
+                        '591729861df3af1c7f1f6304d0cabdc369ec2ada355aca967d778400dbeba550',
+                      ],
         keys       => [
-                        '78f8ca2251ebb2b0bbfde24ce77e0e99f9c321cc',
-                        'dea1e3e99b29a9edbadd649a06e47f04d760aaf7',
-                        'aaa6503284a6870515bcff9a0c68b969c94fa61b',
+                        'eb92fa268853db52ba44fc55962691427b3c4f830cebeaddc8fc47998d9395fc',
+                        '0a43696fbd9aa7f51359d524c85bd260eb85c017e4ac345b88edb2b1a7f8c9be',
                       ],
         #------------------------------------------------
         HUMAN      => HUMAN,
@@ -48,7 +51,6 @@ sub new {
         EMPTY      => EMPTY,
         NL         => NL,
         UNIT       => 30,
-        timeout    => 180,
         locked     => 0,
         alert      => '',
         view       => '',

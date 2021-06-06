@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=0.9,user-scaleable=yes">
+    <meta name="viewport" content="width=device-width,user-scaleable=yes">
     <meta property="og:title" content="Crunchy: Never played crispy Omok like this.">
     <meta property="og:description" content="A variation of Omok or Gomoku by adding an interesting rule.">
     <meta property="og:image" content="media/og-image.png">
@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
     <script src="[% js_bcf %]"></script>
-    <script src="js/sha1.js"></script>
+    <script src="[% js_hasher %]"></script>
     <title>[% title %]</title>
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+SC:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya:regular,bold,italic,bolditalic" rel="stylesheet">
     <!--link rel="icon" type="image/png" sizes="96x96" href="img/favicon.png"-->
 </head>
 
@@ -22,7 +22,7 @@
     <div id="header">
     <!-- title & game id -->
     <form id="form" action="index.pl" method="[% method %]">
-        <center><div style="margin: 5px;">
+        <div class="l-block">
             <!-- Crunchy mode -->
             <div class="menu" title="Toggle Crunchy mode">
                 <a href="#" id="bcf-mode">
@@ -56,11 +56,11 @@
             <!-- save -->
             <div class="menu">
                 <a href="#" id="save" title="Save the current game">
-                <i class="fa fa-send" style="color:#31b5d6"></i>
+                <i class="fa fa-rss" style="color:#31b5d6;"></i>
                 </a> [% L %]
                 <div id="msg-div" class="float-div">
                     <input type="text" id="msg" name="msg" class="float-box"
-                     placeholder="Game description">
+                     placeholder="Save the game: give a description.">
                 </div>
                 <div id="key-div" class="float-div">
                     <input type="password" id="pwd" name="pwd" class="float-box"
@@ -75,9 +75,16 @@
                 </a>
                 [% L %]
             </div>
-        </div></center>
 
-        <center><div style="margin: 5px;">
+            <!-- game lock -->
+            <div class="menu" title="Game status: locked/unlocked">
+                <i class="fa fa-unlock" id="game-status-lock"
+                   style="color:#555;font-size:44px"></i>
+                [% L %]
+            </div>
+        </div>
+
+        <div class="l-block">
             <!-- players / victory Points -->
             <div class="menu_id_score">
                 <label>
@@ -95,10 +102,10 @@
 
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
                 <img class="stones" src="img/30px/black.png" title="Black victory points">
-                [% M %][% board.scoreB %]
-                [% M %]
+                [% S %][% board.scoreB %]
+                [% S %]
                 <img class="stones" src="img/30px/white.png" title="White victory points">
-                [% M %][% board.scoreW %]
+                [% S %][% board.scoreW %]
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
 
                 <label>
@@ -115,7 +122,7 @@
                 <label>
 
             </div>
-        </div></center>
+        </div>
 
 
         <!-- hidden values -->
@@ -161,46 +168,48 @@
     <center>
     <div id="help">
     <h2>* What's this game?</h2>
-    <h4>Crunchy [% dash %] A brand new game created by Francis.<br/>
-    He wanted to make <a href="https://en.wikipedia.org/wiki/Gomoku">Omok (a.k.a. Gomoku)</a>
-    more interesting by adding a very simple rule [% dash %] Crunchy rule.</h4>
+    <h4><u>Crunchy</u> [% dash %] A brand new game created by Francis.<br/>
+    He wanted to make <a href="https://en.wikipedia.org/wiki/Gomoku"><u>Omok (a.k.a. Gomoku)</u></a>
+    more interesting by adding a very simple rule [% dash %] <u>Crunchy rule</u>.</h4>
 
     <hr>
     <h2>* Rule</h2>
     <h4><u>Crunchy rule</u> [% dash %] One can clamp the enemy's two successive stones
     in any directions if any. Feel free to capture those stones.<br/><br/>
-    (1) Firstly making five stones in a row [% dash %]> victory<br/>
-    (2) Firstly getting 10 captured stones [% dash %]> victory</h4>
+    (1) <u>Firstly making five stones in a row</u> [% dash %]> <i>victory</i><br/>
+    (2) <u>Firstly getting 10(ten) captured stones</u> [% dash %]> <i>victory</i></h4>
 
     <hr>
-    <h2>* Playing with AI [% L %]
+    <h2>* Playing with AIs [% L %]
     <img class="avatar" src="img/id_sofia.png">[% M %]<img class="avatar" src="img/id_maria.png"></h2>
     <h4>Francis created some AI applications for this game [% dash %]
-    SofiAI and MariAI [% dash %] Just select one from AI avatars to play with.<br/>
+    <u>SofiAI</u> and <u>MariAI</u> [% dash %] Just select one from AI avatars to play with.<br/>
     Enjoy the time with them.</h4>
 
     <hr>
     <h2>* Menu</h2>
     <h4><i class="fa fa-toggle-on" style="color:#299c39;font-size:30px;vertical-align:middle;"></i>
-    [% L %] Toggle Crunchy game mode. (See the Crunchy rule above)</h4>
+    [% L %] Toggle Crunchy game mode.</h4>
     <h4><i class="fa fa-delicious" style="color:#3152a5;font-size:30px;vertical-align:middle;"></i>
     [% L %] Start a new game</h4>
-    <h4><i class="fa fa-send" style="color:#31b5d6;font-size:28px;vertical-align:middle;"></i>
-    [% L %] Save the game that is playing now</h4>
     <h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:30px;vertical-align:middle;"></i>
     [% L %] Load the saved game list to replay</h4>
+    <h4><i class="fa fa-rss" style="color:#31b5d6;font-size:30px;vertical-align:middle;"></i>
+    [% L %] Save the game that is playing now</h4>
     <h4><i class="fa fa-undo" style="color:#ff6342;font-size:30px;vertical-align:middle;"></i>
     [% L %] Undo last move played</h4>
+    <h4><i class="fa fa-lock" style="color:#555;font-size:30px;vertical-align:middle;"></i>
+    [% L %] When locked you cannot play, you can replay only.</h4>
     <h4><img src="img/spinner.svg" style="height:24px;vertical-align:middle;">
     [% L %] Indicating AI is thinking</h4>
 
     <hr>
-    <h2>* Estimated Winning Probability (EWP) Bar</h2>
+    <h2>* Estimated Winning Probability (EWP)</h2>
     <div style="border: solid 1px #444;background-color:#eee;width:400px;">
     <div style="text-align:center;color:#eee;height:20px;
                 width:70%;background-color:#444">70%</div></div>
     <h4>
-    <u>EWP bar</u> is basically about the odds of <u>MARIAI's winning over the opposing player</u>.
+    <u>EWP</u> is basically about the odds of <u>MARIAI's winning over the opposing player</u>.
     MariAI evaluates her winning probability based on the result of almost 1+ million Monte-Carlo Tree Search (MTCS).</br></br>
     Thus, EWP is <u>only updated right after every MariAI's move</u>.
     The number of Monte Carlo simulations depends on the game parameter, and is closely related to her ponding time.</br>
@@ -208,12 +217,11 @@
     <hr>
     <h2>* Shortcuts</h2>
     <h4>
-    (All in lowercase)<br/>
-    n [% dash %] Start a new game<br/>
-    u [% dash %] Undo last move played<br/>
-    t [% dash %] Toggle the Crunchy mode<br/>
-    l [% dash %] Show the saved game list<br/>
-    s [% dash %] Save the game now playing<br/>
+    Ctrl + n [% dash %] Start a new game<br/>
+    Ctrl + u [% dash %] Undo last move played<br/>
+    Ctrl + t [% dash %] Toggle the Crunchy mode<br/>
+    Ctrl + l [% dash %] Show the saved game list<br/>
+    Ctrl + s [% dash %] Save the game now playing<br/>
     0 [% dash %] Go to the first move<br/>
     9 [% dash %] Go to the last move<br/>
     [right-arrow] [% dash %] Go to the next move<br/>
@@ -223,8 +231,9 @@
     </div></center>
 
     <!-- copyright -->
-    Crunchy [% dash %] (c) 2017-2021 Francis.
+    <center>Crunchy [% dash %] (c) 2017-2021 Francis.</center>
 </div>
+
 
 <!-- popup msg -->
 [% IF alert %]
