@@ -34,6 +34,12 @@ textarea:focus, input:focus{
     outline: none;
 }
 
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid lightgray;
+}
+
 [contentEditable=true]:empty:not(:focus):before {
     content:attr(data-text)
 }
@@ -84,6 +90,22 @@ textarea:focus, input:focus{
     min-width: 570px;
 }
 
+.id-hash {
+    font-family: monospace;
+    font-size: 13px;
+    color: salmon;
+    white-space: pre;
+    margin: 1em 0;
+}
+
+.user-hash {
+    font-family: monospace;
+    font-size: 13px;
+    color: navy;
+    white-space: pre;
+    margin: 1em 0;
+}
+
 #board {
     padding-top: 3px;
     text-align: center;
@@ -95,7 +117,7 @@ textarea:focus, input:focus{
     text-align: center;
     vertical-align: middle;
     font-family: 'Alegreya';
-    font-size: 20px;
+    font-size: 22px;
     line-height: 1.4em;
 }
 
@@ -159,23 +181,35 @@ textarea:focus, input:focus{
 
 #rp-list {
     min-width: 400px;
-    max-width: 400px;
-    width: 50%;
-    height: 40%;
+    max-width: 500px;
+    min-height: 400px;
+    max-height: 550px;
+    width: 500px;
+    height: 550px;
     padding: 6px 20px;
     text-align: left;
+}
+
+.rp-list-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #pwd {
     width: 300px;
     height: 1.5em;
     padding: 5px 20px;
+    color: #eee;
+    background-color: #444;
 }
 
 #msg {
-    width: 300px;
+    width: 400px;
     height: 1.5em;
     padding: 5px 20px;
+    color: #444;
+    background-color: #e3e4fa;
 }
 
 .stones {

@@ -45,10 +45,16 @@
                 </a> [% L %]
                 <div id="rp-list" class="float-div float-box">
                 [% FOREACH db IN gamelist %]
-                    <div>
-                        <a href="#" id="[% db.id %]" class="rp-del">[x]</a>[% L %]
+                    <div class="rp-list-line">
+                        <a href="#" id="[% db.id %]" class="rp-del">
+                            <i class="fa fa-trash" style="color:#333;font-size:20px;"></i>
+                        </a> [% S %]
+                        <span class="id-hash">[% db.id7 %]</span>
+                        <span class="user-hash">[% db.sb7 %]</span>
+                        [% S %]
                         <a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
                     </div>
+                    <hr>
                 [% END %]
                 </div>
             </div>
@@ -60,11 +66,11 @@
                 </a> [% L %]
                 <div id="msg-div" class="float-div">
                     <input type="text" id="msg" name="msg" class="float-box"
-                     placeholder="Save the game: give a description.">
+                     placeholder="Save the game: give a description." maxlength="64">
                 </div>
                 <div id="key-div" class="float-div">
                     <input type="password" id="pwd" name="pwd" class="float-box"
-                     placeholder="Secret key">
+                     placeholder="Secret Key" maxlength="64">
                 </div>
             </div>
 
@@ -103,7 +109,7 @@
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
                 <img class="stones" src="img/30px/black.png" title="Black victory points">
                 [% S %][% board.scoreB %]
-                [% S %]
+                [% M %]
                 <img class="stones" src="img/30px/white.png" title="White victory points">
                 [% S %][% board.scoreW %]
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
@@ -222,12 +228,12 @@
     Ctrl + t [% dash %] Toggle the Crunchy mode<br/>
     Ctrl + l [% dash %] Show the saved game list<br/>
     Ctrl + s [% dash %] Save the game now playing<br/>
-    0 [% dash %] Go to the first move<br/>
-    9 [% dash %] Go to the last move<br/>
-    [right-arrow] [% dash %] Go to the next move<br/>
-    [left-arrow] [% dash %] Go to the previous move<br/>
-    [up-arrow] [% dash %] Jump to the previous 5- move<br/>
-    [down-arrow] [% dash %] Jump to the next 5+ move<br/>
+    Ctrl + 0 [% dash %] Go to the first move<br/>
+    Ctrl + 9 [% dash %] Go to the last move<br/>
+    Ctrl + [right-arrow] [% dash %] Go to the next move<br/>
+    Ctrl + [left-arrow] [% dash %] Go to the previous move<br/>
+    Ctrl + [up-arrow] [% dash %] Jump to the previous 5- move<br/>
+    Ctrl + [down-arrow] [% dash %] Jump to the next 5+ move<br/>
     </div></center>
 
     <!-- copyright -->

@@ -5,7 +5,7 @@ package BCF::Game;
 use BCF::Board;
 use BCF::Config;
 use File::Path qw / make_path /;
-use Digest::SHA qw/ sha1_hex sha256_hex /;
+use Digest::SHA qw/ sha1_hex /;
 use Storable qw/ dclone lock_nstore lock_retrieve /;
 
 sub new {
@@ -92,21 +92,30 @@ sub load_gamelist {
     return $res;
 }
 
-sub save_gamelist {
-    my ($self, $id, $msg) = @_;
+sub save_game_to_gamelist {
+    my ($self, $id, $msg, $saved_by) = @_;
     my $db = lock_retrieve 'sav/game.list';
     $self->save_game(1);
     $db->{$id}{id} = $id;
     $db->{$id}{msg} = $msg;
     $db->{$id}{time} = time();
+    $db->{$id}{saved_by} = $saved_by;
+    $db->{$id}{id7} = substr($id, 0, 7);
+    $db->{$id}{sb7} = substr($saved_by, 0, 7);
     lock_nstore $db, 'sav/game.list'
 }
 
-sub delete_gamelist {
-    my ($self, $id) = @_;
+sub delete_game_from_gamelist {
+    my ($self, $id, $saved_by) = @_;
     my $db = lock_retrieve 'sav/game.list';
     for ( keys %{$db} ) {
-        delete $db->{$id} if $_ eq $id;
+        if ( $saved_by eq 'master' ) {
+            delete $db->{$_} if $_ eq $id;
+        } else {
+            next unless $db->{$_}{saved_by};
+            next if $db->{$_}{saved_by} ne $saved_by;
+            delete $db->{$_} if $_ eq $id;
+        }
     }
     lock_nstore $db, 'sav/game.list';
     unlink "sav/$id" if -e "sav/$id";

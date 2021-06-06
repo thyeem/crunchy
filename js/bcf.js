@@ -162,7 +162,6 @@ $(document).ready(function() {
         $do.val('replay');
         $go.val((n < 0)? 0 : n);
         do_submit();
-//         $form.trigger('submit');
     }
 
 
@@ -284,8 +283,6 @@ $(document).ready(function() {
     // pwd submit
     $pwd.keydown(function(e) {
         if (e.which === 13) {
-//             alert($pwd.val());
-//             alert(sha256($pwd.val()));
             $pwd.val(sha256($pwd.val()));
             do_submit();
             return false;
@@ -351,22 +348,22 @@ $(document).ready(function() {
     // shortcut: key triggers
 
     $body.on('keydown', function(e) {
-        if (_locked && e.which === 37) {
+        if (_locked && e.ctrlKey && e.which === 37) {
             e.preventDefault();
             goto_move(_moves-1);
-        } else if (_locked && e.which === 39) {
+        } else if (_locked && e.ctrlKey && e.which === 39) {
             e.preventDefault();
             goto_move(_moves+1);
-        } else if (_locked && e.which === 38) {
+        } else if (_locked && e.ctrlKey && e.which === 38) {
             e.preventDefault();
             goto_move(_moves-5);
-        } else if (_locked && e.which === 40) {
+        } else if (_locked && e.ctrlKey && e.which === 40) {
             e.preventDefault();
             goto_move(_moves+5);
-        } else if (_locked && e.which === 48) {
+        } else if (_locked && e.ctrlKey && e.which === 48) {
             e.preventDefault();
             goto_move(0);
-        } else if (_locked && e.which === 57) {
+        } else if (_locked && e.ctrlKey && e.which === 57) {
             e.preventDefault();
             goto_move(361);
         } else if (e.ctrlKey && e.which === 78) {

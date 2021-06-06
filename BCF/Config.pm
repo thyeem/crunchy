@@ -36,7 +36,7 @@ sub new {
         cgi        => undef,
         game       => undef,
         ____       => [
-                        '591729861df3af1c7f1f6304d0cabdc369ec2ada355aca967d778400dbeba550',
+                        'd02891e121f8270dbceeea04bc915831773af6b19c5653fa51b7cb0e793981e9',
                       ],
         keys       => [
                         'eb92fa268853db52ba44fc55962691427b3c4f830cebeaddc8fc47998d9395fc',
