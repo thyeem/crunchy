@@ -390,6 +390,7 @@ $(document).ready(function() {
         }
     });
 
+
     // run together at once --------------------------------
     render_board();
     render_header();
