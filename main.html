@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,user-scaleable=yes">
     <meta property="og:title" content="Crunchy: Never played crispy Omok like this.">
     <meta property="og:description" content="A variation of Omok or Gomoku by adding an interesting rule.">
-    <meta property="og:image" content="media/og-image.png">
+    <meta property="og:image" content="media/crunchy.png">
     <link rel="stylesheet" href="[% css_fa %]">
     <link rel="stylesheet" href="[% css_bcf %]">
     <script src="[% js_jquery %]"></script>
@@ -97,7 +97,7 @@
             <!-- players / victory Points -->
             <div class="menu_id_score">
                 <label>
-                    <input type="radio" name="pB" value="human" checked>
+                    <input type="radio" name="pB" value="human">
                     <img class="player-avatar" src="img/id_human.png" id="b-human" title="Set Human as black player">
                 </label>
                 <label>
@@ -118,7 +118,7 @@
                 [% M %]<span style="color:#d3d4e8">|</span>[% M %]
 
                 <label>
-                    <input type="radio" name="pW" value="human" checked>
+                    <input type="radio" name="pW" value="human">
                     <img class="player-avatar" src="img/id_human.png" id="w-human" title="Set Human as white player">
                 </label>
                 <label>
@@ -239,10 +239,10 @@
     Ctrl + 6 [% dash %] Set MariAI as white player<br/>
     Ctrl + 0 [% dash %] Go to the first move<br/>
     Ctrl + 9 [% dash %] Go to the last move<br/>
-    Alt + [right-arrow] [% dash %] Go to the next move<br/>
-    Alt + [left-arrow] [% dash %] Go to the previous move<br/>
-    Alt + [up-arrow] [% dash %] Jump to the previous 5- move<br/>
-    Alt + [down-arrow] [% dash %] Jump to the next 5+ move<br/>
+    Ctrl + [right-arrow] [% dash %] Go to the next move<br/>
+    Ctrl + [left-arrow] [% dash %] Go to the previous move<br/>
+    Ctrl + [up-arrow] [% dash %] Jump to the previous 5- move<br/>
+    Ctrl + [down-arrow] [% dash %] Jump to the next 5+ move<br/>
     </div></center>
 
     <!-- copyright -->

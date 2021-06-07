@@ -1,76 +1,76 @@
 $(document).ready(function() {
     // caching jQuery obj ----------------------------------
     $NL = $('#NL');
-    $SOFIAI = $('#SOFIAI');
-    $MARIAI = $('#MARIAI');
-    $HUMAN  = $('#HUMAN');
-    $BLACK  = $('#BLACK');
-    $WHITE  = $('#WHITE');
-    $EMPTY  = $('#EMPTY');
-    $UNIT   = $('#UNIT');
-    $body = $('body');
-    $view = $('#view');
-    $bcf = $('#bcf');
-    $locked = $('#locked');
-    $id = $('#id');
-    $pB = $('input[type=radio][name=pB]');
-    $pW = $('input[type=radio][name=pW]');
-    $eB = $('#eB');
-    $eW = $('#eW');
-    $pBset = $('#pBset');
-    $pWset = $('#pWset');
-    $x = $('#x');
-    $y = $('#y');
-    $moves = $('#moves');
-    $turn = $('#turn');
-    $bcf_switch = $('#bcf-switch');
-    $bcf_mode = $('#bcf-mode');
-    $lock_status = $('#game-status-lock');
-    $save = $('#save');
-    $black_wp = $('#black-wp');
-    $white_wp = $('#white-wp');
-    $do = $('#do');
-    $go = $('#go');
-    $form = $('#form');
-    $board = $('#board');
-    $float_div = $('.float-div');
-    $msg_div = $('#msg-div');
-    $key_div = $('#key-div');
-    $rp_list = $('#rp-list');
-    $pwd = $('#pwd');
-    $msg = $('#msg');
-    $did = $('#did');
-    $back = $('#back');
-    $forth = $('#forth');
-    $undo = $('#undo');
-    $replay = $('#replay');
-    $spinner = $('#spinner');
+    $SOFIAI        = $('#SOFIAI');
+    $MARIAI        = $('#MARIAI');
+    $HUMAN         = $('#HUMAN');
+    $BLACK         = $('#BLACK');
+    $WHITE         = $('#WHITE');
+    $EMPTY         = $('#EMPTY');
+    $UNIT          = $('#UNIT');
+    $body          = $('body');
+    $view          = $('#view');
+    $bcf           = $('#bcf');
+    $locked        = $('#locked');
+    $id            = $('#id');
+    $pB            = $('input[type=radio][name=pB]');
+    $pW            = $('input[type=radio][name=pW]');
+    $eB            = $('#eB');
+    $eW            = $('#eW');
+    $pBset         = $('#pBset');
+    $pWset         = $('#pWset');
+    $x             = $('#x');
+    $y             = $('#y');
+    $moves         = $('#moves');
+    $turn          = $('#turn');
+    $bcf_switch    = $('#bcf-switch');
+    $bcf_mode      = $('#bcf-mode');
+    $lock_status   = $('#game-status-lock');
+    $save          = $('#save');
+    $black_wp      = $('#black-wp');
+    $white_wp      = $('#white-wp');
+    $do            = $('#do');
+    $go            = $('#go');
+    $form          = $('#form');
+    $board         = $('#board');
+    $float_div     = $('.float-div');
+    $msg_div       = $('#msg-div');
+    $key_div       = $('#key-div');
+    $rp_list       = $('#rp-list');
+    $pwd           = $('#pwd');
+    $msg           = $('#msg');
+    $did           = $('#did');
+    $back          = $('#back');
+    $forth         = $('#forth');
+    $undo          = $('#undo');
+    $replay        = $('#replay');
+    $spinner       = $('#spinner');
 
     // define-init global var ------------------------------
     NL = $NL.val();
-    SOFIAI = $SOFIAI.val();
-    MARIAI = $MARIAI.val();
-    HUMAN  = $HUMAN.val();
-    BLACK  = $BLACK.val();
-    WHITE  = $WHITE.val();
-    EMPTY  = $EMPTY.val();
-    UNIT   = $UNIT.val();
-    _view = $view.val();
-    _view = (_view) ? _view.split(':') : _view;
-    _id = $id.val();
-    _bcf = +$bcf.val();
-    _locked = +$locked.val();
-    _pB = $pBset.val();
-    _pW = $pWset.val();
-    _eB = $eB.val();
-    _eW = $eW.val();
-    _x = +$x.val();
-    _y = +$y.val();
-    _moves = +$moves.val();
-    _turn = $turn.val();
-    _xhr = null;
-    _pBai = 0;
-    _pWai = 0;
+    SOFIAI      = $SOFIAI.val();
+    MARIAI      = $MARIAI.val();
+    HUMAN       = $HUMAN.val();
+    BLACK       = $BLACK.val();
+    WHITE       = $WHITE.val();
+    EMPTY       = $EMPTY.val();
+    UNIT        = $UNIT.val();
+    _view       = $view.val();
+    _view       = (_view) ? _view.split(':') : _view;
+    _id         = $id.val();
+    _bcf        = +$bcf.val();
+    _locked     = +$locked.val();
+    _pB         = $pBset.val();
+    _pW         = $pWset.val();
+    _eB         = $eB.val();
+    _eW         = $eW.val();
+    _x          = +$x.val();
+    _y          = +$y.val();
+    _moves      = +$moves.val();
+    _turn       = $turn.val();
+    _xhr        = null;
+    _blackAI    = 0;
+    _whiteAI    = 0;
 
     //------------------------------------------------------
     // render board and stones
@@ -102,10 +102,17 @@ $(document).ready(function() {
 
     function render_header() {
         $spinner.hide();
-        $pB.filter('[value=' + _pB + ']').prop("checked",true);
-        $pW.filter('[value=' + _pW + ']').prop("checked",true);
         (_bcf)? toggle_bcf(1) : toggle_bcf(0);
         lock_status(_locked);
+    }
+
+    function render_players() {
+        $pB.filter('[value=' + _pB + ']').prop("checked",true);
+        $pW.filter('[value=' + _pW + ']').prop("checked",true);
+
+        // trigger AI agents if needed
+        (_turn === BLACK) ? $pB.filter(':checked').trigger('change')
+                          : $pW.filter(':checked').trigger('change');
     }
 
     function render_EWP() {
@@ -190,29 +197,14 @@ $(document).ready(function() {
         });
     }
 
-    // blur when AIs on work
-    $pB.on('mousedown', function(e) {
-        if (!_pBai) return true;
-        e.preventDefault();
-        this.blur();
-        window.focus();
-    });
 
-    $pW.on('mousedown', function(e) {
-        if (!_pWai) return true;
-        e.preventDefault();
-        this.blur();
-        window.focus();
-    });
-
-    // AI event handler --------------------------------------
-    // onchange: let AIs go
+    // onchange: letting AIs play ---------------------------
     $pB.change(function() {
         if (_xhr) _xhr.abort();
         if (_locked) return false;
         _pB = $pB.filter(':checked').val();
-        if (_turn === BLACK && _pB !== HUMAN) _pBai = 1;
-        if (_pBai) {
+        if (_turn === BLACK && _pB !== HUMAN) _blackAI = 1;
+        if (_blackAI) {
             ajax_let_AIs_play();
             $(this).off('click');
             $spinner.fadeIn();
@@ -223,10 +215,10 @@ $(document).ready(function() {
     $pW.change(function() {
         if (_xhr) _xhr.abort();
         if (_locked) return false;
-        if (_pWai) return false;
+        if (_whiteAI) return false;
         _pW = $pW.filter(':checked').val();
-        if (_turn === WHITE && _pW !== HUMAN) _pWai = 1;
-        if (_pWai) {
+        if (_turn === WHITE && _pW !== HUMAN) _whiteAI = 1;
+        if (_whiteAI) {
             ajax_let_AIs_play();
             $(this).off('click');
             $spinner.fadeIn();
@@ -234,18 +226,41 @@ $(document).ready(function() {
         return false;
     });
 
-    // submit event handler --------------------------------------
-    // clicking board
+    // when clicking the board -----------------------------------
     $board.click(function(e) {
-        if (_locked || _pBai || _pWai) return false;
+        if (_blackAI || _whiteAI) return false;
         var offset_t = $(this).offset().top - $(window).scrollTop();
         var offset_l = $(this).offset().left - $(window).scrollLeft();
         var x = Math.ceil( (e.clientX - offset_l) / UNIT );
         var y = Math.ceil( (e.clientY - offset_t) / UNIT );
-        if (overlapped(x, y)) return false;
-        $x.val(x);
-        $y.val(y);
-        do_submit();
+
+        if (_locked) {
+            // L/R back and forth navigator
+            if (x < 4 && y < 4) {
+                goto_move(0);
+                return false;
+            }
+            if (x > 15 && y > 15) {
+                goto_move(361);
+                return false;
+            }
+            if (x < 10 && y < 4) {
+                goto_move(_moves-5);
+                return false;
+            }
+            if (x > 10 && y > 15) {
+                goto_move(_moves+5);
+                return false;
+            }
+            (x < 10) ? goto_move(_moves-1)
+                     : goto_move(_moves+1);
+        } else {
+            // In playing mode
+            if (overlapped(x, y)) return false;
+            $x.val(x);
+            $y.val(y);
+            do_submit();
+        }
         return false;
     });
 
@@ -318,11 +333,12 @@ $(document).ready(function() {
         $float_div.hide();
         $key_div.fadeToggle(300);
         $pwd.focus();
+        return false;
     });
 
     // submit undo
     $undo.click(function() {
-        if (_pBai || _pWai) return false;
+        if (_blackAI || _pWai) return false;
         $do.val('undo');
         $go.val(_moves-1);
         do_submit();
@@ -346,16 +362,16 @@ $(document).ready(function() {
     //------------------------------------------
     // shortcuts
     $body.on('keydown', function(e) {
-        if (_locked && e.altKey && e.which === 37) {
+        if (_locked && e.ctrlKey && e.which === 37) {
             e.preventDefault();
             goto_move(_moves-1);
-        } else if (_locked && e.altKey && e.which === 39) {
+        } else if (_locked && e.ctrlKey && e.which === 39) {
             e.preventDefault();
             goto_move(_moves+1);
-        } else if (_locked && e.altKey && e.which === 38) {
+        } else if (_locked && e.ctrlKey && e.which === 38) {
             e.preventDefault();
             goto_move(_moves-5);
-        } else if (_locked && e.altKey && e.which === 40) {
+        } else if (_locked && e.ctrlKey && e.which === 40) {
             e.preventDefault();
             goto_move(_moves+5);
         } else if (_locked && e.ctrlKey && e.which === 48) {
@@ -389,14 +405,11 @@ $(document).ready(function() {
         }
     });
 
-    // run-run-run -----------------------------------------
-    render_header();
-    render_EWP();
+    // run together at once --------------------------------
     render_board();
-
-    // trigger AI agents if needed
-    (_turn === BLACK) ? $pB.filter(':checked').trigger('change')
-                      : $pW.filter(':checked').trigger('change');
+    render_header();
+    render_players();
+    render_EWP();
 
 }); // end of ready
 
