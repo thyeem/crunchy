@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // caching jQuery obj ----------------------------------
-    $NL = $('#NL');
+    $NL            = $('#NL');
     $SOFIAI        = $('#SOFIAI');
     $MARIAI        = $('#MARIAI');
     $HUMAN         = $('#HUMAN');
@@ -40,8 +40,6 @@ $(document).ready(function() {
     $pwd           = $('#pwd');
     $msg           = $('#msg');
     $did           = $('#did');
-    $back          = $('#back');
-    $forth         = $('#forth');
     $undo          = $('#undo');
     $replay        = $('#replay');
     $spinner       = $('#spinner');
@@ -338,26 +336,13 @@ $(document).ready(function() {
 
     // submit undo
     $undo.click(function() {
-        if (_blackAI || _pWai) return false;
+        if (_blackAI || _whiteAI) return false;
         $do.val('undo');
         $go.val(_moves-1);
         do_submit();
         return false;
     });
 
-    // submit nav-back
-    $back.click(function() {
-        if (!_locked) return false;
-        goto_move(_moves-1);
-        return false;
-    });
-
-    // submit nav-forth
-    $forth.click(function() {
-        if (!_locked) return false;
-        goto_move(_moves+1);
-        return false;
-    });
 
     //------------------------------------------
     // shortcuts
@@ -391,17 +376,17 @@ $(document).ready(function() {
         } else if (e.ctrlKey && e.which === 83) {
             document.getElementById('save').click();
         } else if (e.ctrlKey && e.which === 49) {
-                document.getElementById('b-human').click();
+            document.getElementById('b-human').click();
         } else if (e.ctrlKey && e.which === 50) {
-                document.getElementById('b-sofia').click();
+            document.getElementById('b-sofia').click();
         } else if (e.ctrlKey && e.which === 51) {
-                document.getElementById('b-maria').click();
+            document.getElementById('b-maria').click();
         } else if (e.ctrlKey && e.which === 52) {
-                document.getElementById('w-human').click();
+            document.getElementById('w-human').click();
         } else if (e.ctrlKey && e.which === 53) {
-                document.getElementById('w-sofia').click();
+            document.getElementById('w-sofia').click();
         } else if (e.ctrlKey && e.which === 54) {
-                document.getElementById('w-maria').click();
+            document.getElementById('w-maria').click();
         }
     });
 
