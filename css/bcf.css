@@ -142,7 +142,7 @@ hr {
 }
 
 .float-box {
-    margin-top: 100px;
+    margin-top: 60px;
     background-color: #e8e8e8;
     border: solid 1px #666;
     border-radius: 10px;
@@ -209,7 +209,7 @@ hr {
     height: 1.5em;
     padding: 5px 20px;
     color: #444;
-    background-color: #e3e4fa;
+    background-color: lemonchiffon;
 }
 
 .stones {
