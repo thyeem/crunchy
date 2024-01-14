@@ -25,73 +25,6 @@
     <div id="header">
     <!-- title & game id -->
     <form id="form" action="index.pl#stop" method="[% method %]">
-        <div class="header-line">
-            <!-- Crunchy mode -->
-            <div class="menu" title="Toggle Crunchy mode">
-                <a href="#" id="bcf-mode">
-                <i class="fa fa-toggle-on" id="bcf-switch"
-                   style="color:#299c39;font-size:46px"></i>
-                </a> [% L %]
-            </div>
-
-            <!-- new game -->
-            <div class="menu" title="New game">
-                <a href="./" id="new-game">
-                <i class="fa fa-delicious" style="color:#3152a5"></i>
-                </a> [% L %][% M %]
-            </div>
-
-            <!-- replay -->
-            <div class="menu" title="Replay the saved games">
-                <a href="#" id="replay">
-                <i class="fa fa-bookmark" style="color:#ff3118"></i>
-                </a> [% L %]
-                <div id="rp-list" class="float-div float-box">
-                [% FOREACH db IN gamelist %]
-                    <div class="rp-list-line">
-                        <a href="#" id="[% db.id %]" class="rp-del">
-                            <i class="fa fa-trash" style="color:#333;font-size:20px;"></i>
-                        </a> [% S %]
-                        <span class="id-hash">[% db.id7 %]</span>
-                        <span class="user-hash">[% db.sb7 %]</span>
-                        [% S %]
-                        <a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
-                    </div>
-                    <hr>
-                [% END %]
-                </div>
-            </div>
-
-            <!-- save -->
-            <div class="menu">
-                <a href="#" id="save" title="Save the current game">
-                <i class="fa fa-rss" style="color:#31b5d6;"></i>
-                </a> [% L %]
-                <div id="msg-div" class="float-div">
-                    <input type="text" id="msg" name="msg" class="float-box"
-                     placeholder="Save the game: give a description." maxlength="64">
-                </div>
-                <div id="key-div" class="float-div">
-                    <input type="password" id="pwd" name="pwd" class="float-box"
-                     placeholder="Secret Key" maxlength="64">
-                </div>
-            </div>
-
-            <!-- undo -->
-            <div class="menu" title="Undo last move">
-                <a href="#" id="undo">
-                <i class="fa fa-undo" style="color:#ff6342;font-size:44px"></i>
-                </a>
-                [% L %]
-            </div>
-
-            <!-- game lock -->
-            <div class="menu" title="Game status: locked/unlocked">
-                <i class="fa fa-unlock" id="game-status-lock"
-                   style="color:#555;font-size:44px"></i>
-                [% L %]
-            </div>
-        </div>
 
         <div class="header-line" id="stop">
             <!-- players / victory Points -->
@@ -102,20 +35,20 @@
                 </label>
                 <label>
                     <input type="radio" name="pB" value="sofia">
-                    <img class="player-avatar" src="img/id_sofia.png" id="b-sofia" title="Set SofiAI as black player">
+                    <img class="player-avatar" src="img/avatar_sofia.png" id="b-sofia" title="Set SofiAI as black player">
                 </label>
                 <label>
                     <input type="radio" name="pB" value="maria">
-                    <img class="player-avatar" src="img/id_maria.png" id="b-maria" title="Set MariAI as black player">
+                    <img class="player-avatar" src="img/avatar_maria.png" id="b-maria" title="Set MariAI as black player">
                 </label>
 
-                [% M %]<span style="color:#d3d4e8">|</span>[% M %]
+                [% S %]<span style="color:#d3d4e8">|</span>[% S %]
                 <img class="stones" src="img/30px/black.png" title="Black victory points">
                 [% S %][% board.scoreB %]
                 [% M %]
                 <img class="stones" src="img/30px/white.png" title="White victory points">
                 [% S %][% board.scoreW %]
-                [% M %]<span style="color:#d3d4e8">|</span>[% M %]
+                [% S %]<span style="color:#d3d4e8">|</span>[% S %]
 
                 <label>
                     <input type="radio" name="pW" value="human">
@@ -123,11 +56,11 @@
                 </label>
                 <label>
                     <input type="radio" name="pW" value="sofia">
-                    <img class="player-avatar" src="img/id_sofia.png" id="w-sofia" title="Set SofiAI as white player">
+                    <img class="player-avatar" src="img/avatar_sofia.png" id="w-sofia" title="Set SofiAI as white player">
                 </label>
                 <label>
                     <input type="radio" name="pW" value="maria">
-                    <img class="player-avatar" src="img/id_maria.png" id="w-maria" title="Set MariAI as white player">
+                    <img class="player-avatar" src="img/avatar_maria.png" id="w-maria" title="Set MariAI as white player">
                 </label>
 
             </div>
@@ -159,7 +92,6 @@
         <input type="hidden" id="pBset" value="[% pB %]">
         <input type="hidden" id="pWset" value="[% pW %]">
         <input type="hidden" id="did" name="did">
-    </form></div>
 
 
     <!-- winning probability -->
@@ -171,7 +103,79 @@
     <div id="spinner"></div>
 
     <!-- game board -->
-    <div><canvas id="board" width="570" height="570"></canvas></div>
+    <div><canvas id="board" width="585" height="585"></canvas></div>
+
+    <div class="header-line">
+        <!-- Crunchy mode -->
+        <div class="menu" title="Toggle Crunchy mode">
+            <a href="#" id="bcf-mode">
+            <i class="fa fa-toggle-on" id="bcf-switch"
+               style="color:#299c39;font-size:46px"></i>
+            [% S %]<span class="menu-label">Crunch</span>
+            </a>[% L %]
+        </div>
+
+        <!-- new game -->
+        <div class="menu" title="New game">
+            <a href="./" id="new-game">
+            <i class="fa fa-delicious" style="color:#3152a5"></i>
+            [% S %]<span class="menu-label">New</span>
+            </a>[% L %]
+        </div>
+
+        <!-- replay -->
+        <!-- div class="menu" title="Replay the saved games">
+            <a href="#" id="replay">
+            <i class="fa fa-bookmark" style="color:#ff3118"></i>
+            </a> [% L %]
+            <div id="rp-list" class="float-div float-box">
+            [% FOREACH db IN gamelist %]
+                <div class="rp-list-line">
+                    <a href="#" id="[% db.id %]" class="rp-del">
+                        <i class="fa fa-trash" style="color:#333;font-size:20px;"></i>
+                    </a> [% S %]
+                    <span class="id-hash">[% db.id7 %]</span>
+                    <span class="user-hash">[% db.sb7 %]</span>
+                    [% S %]
+                    <a href="index.pl?id=[% db.id %]&do=replay&bcf=1">[% db.msg %]</a>
+                </div>
+                <hr>
+            [% END %]
+            </div>
+        </div-->
+
+        <!-- save -->
+        <!-- div class="menu">
+            <a href="#" id="save" title="Save the current game">
+            <i class="fa fa-rss" style="color:#31b5d6;"></i>
+            </a> [% L %]
+            <div id="msg-div" class="float-div">
+                <input type="text" id="msg" name="msg" class="float-box"
+                 placeholder="Save the game: give a description." maxlength="64">
+            </div>
+            <div id="key-div" class="float-div">
+                <input type="password" id="pwd" name="pwd" class="float-box"
+                 placeholder="Secret Key" maxlength="64">
+            </div>
+        </div-->
+
+        <!-- undo -->
+        <div class="menu" title="Undo last move">
+            <a href="#" id="undo">
+            <i class="fa fa-undo" style="color:#ff6342;font-size:44px"></i>
+            [% S %]<span class="menu-label">Undo</span>
+            </a>
+            [% L %]
+        </div>
+
+        <!-- game lock -->
+        <div class="menu" title="Game status: locked/unlocked">
+            <i class="fa fa-unlock" id="game-status-lock"
+               style="color:#555;font-size:44px"></i>
+            [% L %]
+        </div>
+    </div>
+    </form></div>
 
     <!-- about the game: crunchy -->
     <center>
@@ -190,7 +194,7 @@
 
     <hr>
     <h2>* Playing with AIs [% L %]
-    <img class="avatar" src="img/id_sofia.png">[% M %]<img class="avatar" src="img/id_maria.png"></h2>
+    <img class="avatar" src="img/avatar_sofia.png">[% M %]<img class="avatar" src="img/avatar_maria.png"></h2>
     <h4>Francis created some AI applications for this game [% dash %]
     <u>SofiAI</u> and <u>MariAI</u> [% dash %] Just select one from AI avatars to play with.<br/>
     Enjoy the time with them.</h4>
@@ -201,10 +205,10 @@
     [% L %] Toggle Crunchy game mode.</h4>
     <h4><i class="fa fa-delicious" style="color:#3152a5;font-size:30px;vertical-align:middle;"></i>
     [% L %] Start a new game</h4>
-    <h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:30px;vertical-align:middle;"></i>
+    <!-- h4><i class="fa fa-bookmark" style="color:#ff3118;font-size:30px;vertical-align:middle;"></i>
     [% L %] Load the saved game list to replay</h4>
     <h4><i class="fa fa-rss" style="color:#31b5d6;font-size:30px;vertical-align:middle;"></i>
-    [% L %] Save the game that is playing now</h4>
+    [% L %] Save the game that is playing now</h4 -->
     <h4><i class="fa fa-undo" style="color:#ff6342;font-size:30px;vertical-align:middle;"></i>
     [% L %] Undo last move played</h4>
     <h4><i class="fa fa-lock" style="color:#555;font-size:30px;vertical-align:middle;"></i>
@@ -215,7 +219,7 @@
     <hr>
     <h2>* Estimated Winning Probability (EWP)</h2>
     <div style="border: solid 1px #444;background-color:#eee;width:400px;">
-    <div style="text-align:center;color:#eee;height:20px;
+    <div style="text-align:center;color:#eee;height:32px;font-size:22px;font-weight:900;
                 width:70%;background-color:#444">70%</div></div>
     <h4>
     <u>EWP</u> is basically about the odds of <u>MARIAI's winning over the opposing player</u>.
@@ -229,8 +233,8 @@
     Ctrl + n [% dash %] Start a new game<br/>
     Ctrl + z [% dash %] Undo last move played<br/>
     Ctrl + t [% dash %] Toggle the Crunchy mode<br/>
-    Ctrl + l [% dash %] Show the saved game list<br/>
-    Ctrl + s [% dash %] Save the game now playing<br/>
+    <!-- Ctrl + l [% dash %] Show the saved game list<br/> -->
+    <!-- Ctrl + s [% dash %] Save the game now playing<br/> -->
     Ctrl + 1 [% dash %] Set human as black player<br/>
     Ctrl + 2 [% dash %] Set SofiAI as black player<br/>
     Ctrl + 3 [% dash %] Set MariAI as black player<br/>
@@ -246,7 +250,7 @@
     </div></center>
 
     <!-- copyright -->
-    <center>Crunchy [% dash %] (c) 2017-2021 Francis.</center>
+    <center>Crunchy [% dash %] (c) 2017-2023 Francis.</center>
 </div>
 
 

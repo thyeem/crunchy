@@ -166,7 +166,7 @@ sub undo_move {
     my $self = shift;
     my $moves = $self->{board}{moves};
     return if $moves < 1;
-    $self->goto_move($moves-1);
+    $self->goto_move($moves-1, $self->{board}{bcf});
     pop @{ $self->{log} };
 }
 
@@ -181,15 +181,16 @@ sub who_won {
 }
 
 sub goto_move {
-    my ($self, $n) = @_;
+    my ($self, $n, $bcf) = @_;
     return if $n < 0;
     $n = ($n > @{ $self->{log} }) ? @{ $self->{log} } : $n;
     if ( $n == 0 ) {
         $self->{board} = BCF::Board->new;
+        $self->set_bcf_mode($bcf);
         ($self->{pB}, $self->{pW}) = (HUMAN, HUMAN);
         ($self->{eB}, $self->{eW}) = (undef, undef);
     } else {
-        $self->goto_move($n-1);
+        $self->goto_move($n-1, $bcf);
         my $d = $self->{log}[$n-1];
         my ($x, $y) = @{ $d->{xy} }[0,1];
         $self->{board}->make_move($x, $y);
@@ -215,7 +216,7 @@ sub read_api_board {
     my $fs = do { local $\; <$fh> };
     close $fh;
     my @data = split /:/, $fs;
-    return if @data != 369;
+    return if @data != (NL*NL + 8);
     $self->{board}->set_last_move(shift @data, shift @data);
     $self->{board}{moves} = shift @data;
     $self->{board}{turn} = itoa(shift @data);
