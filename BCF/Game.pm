@@ -215,7 +215,7 @@ sub read_api_board {
     my $fs = do { local $\; <$fh> };
     close $fh;
     my @data = split /:/, $fs;
-    return if @data != 369;
+    return if @data != (NL*NL + 8);
     $self->{board}->set_last_move(shift @data, shift @data);
     $self->{board}{moves} = shift @data;
     $self->{board}{turn} = itoa(shift @data);
