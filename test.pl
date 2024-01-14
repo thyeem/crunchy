@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I/home/ubuntu/perl5/lib/perl5
+#!/usr/bin/perl 
 
 use feature qw/ say /;
 use Storable qw / lock_nstore lock_retrieve /;

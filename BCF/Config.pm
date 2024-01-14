@@ -6,7 +6,7 @@ use base qw / Exporter /;
 our @EXPORT = qw / NL GOAL HUMAN SOFIAI MARIAI BLACK WHITE EMPTY VP /;
 
 use constant {
-    NL => 19,
+    NL => 13,
     GOAL => 5,
     HUMAN => 'human',
     SOFIAI => 'sofia',
@@ -50,7 +50,7 @@ sub new {
         WHITE      => WHITE,
         EMPTY      => EMPTY,
         NL         => NL,
-        UNIT       => 30,
+        UNIT       => 30 * 1.5,
         locked     => 0,
         alert      => '',
         view       => '',

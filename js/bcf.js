@@ -80,7 +80,7 @@ $(document).ready(function() {
         _dot = new Image();
         _board.onload = () => {
             _context = $board[0].getContext('2d');
-            _context.drawImage(_board, 0, 0, 570, 570);
+            _context.drawImage(_board, 0, 0, NL*UNIT, NL*UNIT);
             if (!_view) return;
             for (var n = 0; n < NL*NL; n++) {
                 if (_y < 0 || _x < 0) break;

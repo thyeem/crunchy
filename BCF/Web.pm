@@ -119,7 +119,7 @@ sub do_replay {
     my $self = shift;
     $self->{locked} = 1;
     return unless defined $self->{go};
-    $self->{game}->goto_move($self->{go});
+    $self->{game}->goto_move($self->{go}, $self->{bcf});
 }
 
 sub do_delete {

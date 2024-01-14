@@ -1,2 +1,19 @@
+# os/ide/editer
 .DS_Store
+Thumbs.db
+[#]*[#]
 *.sw?
+*~
+/.vscode/
+/.idea/
+
+# c/c++/make
+*.o
+*.d
+
+# python
+__pycache__
+*.ipynb_checkpoints
+
+# project
+bin/

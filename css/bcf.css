@@ -61,13 +61,21 @@ hr {
 
 .fa {
     font-size: 40px;
+    vertical-align: middle;
 }
 
 .menu {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
+}
 
+.menu-label {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 22px;
+    font-family: 'Alegreya';
+    font-weight: 700;
 }
 
 .menu_id_score {
@@ -75,7 +83,7 @@ hr {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-	font-size: 28px;
+	font-size: 36px;
     font-weight: 700;
 }
 
@@ -87,7 +95,7 @@ hr {
 
 .header-line {
     margin-top: 5px;
-    min-width: 570px;
+    min-width: 585px;
 }
 
 .id-hash {
@@ -248,15 +256,18 @@ hr {
 #prob {
     text-align: center;
     margin: 0 auto;
-    width: 568px;
+    width: 585px;
     min-width: 368px;
-    height: 20px;
+    height: 30px;
     border: solid 1px #444;
-    font-size: 16px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #black-wp {
     text-align: center;
+    font-weight: 900;
+    font-size: 20px;
     width: 50%;
     height: 100%;
     background-color: #444;
@@ -265,10 +276,10 @@ hr {
 
 #white-wp {
     text-align: center;
+    font-weight: 900;
+    font-size: 20px;
     width: 50%;
     height: 100%;
     background-color: #eee;
     color: #444;
 }
-
-

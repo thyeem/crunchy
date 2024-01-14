@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I/home/ubuntu/perl5/lib/perl5
+#!/usr/bin/perl 
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ use CGI;
 use GD;
 GD::Image->trueColor(1);
 
-use constant NL => 19;
+use constant NL => 13;
 use constant CT => (NL+1)/2;
 use constant TW => 30;
 use constant TH => 30;
@@ -43,22 +43,29 @@ for my $i ( 1 .. NL ) {
     }
 }
 
-## cross_dot
+## corners
 place_tile($e_tl, $img, 1, 1);
 place_tile($e_tr, $img, NL, 1);
 place_tile($e_bl, $img, 1, NL);
 place_tile($e_br, $img, NL, NL);
+
+## 13x13
 place_tile($e_cd, $img, 4, 4);
 place_tile($e_cd, $img, 4, NL-3);
 place_tile($e_cd, $img, NL-3, 4);
 place_tile($e_cd, $img, NL-3, NL-3);
 place_tile($e_cd, $img, CT, CT);
-## if NL == 19
-place_tile($e_cd, $img, CT, 4);
-place_tile($e_cd, $img, 4, CT);
-place_tile($e_cd, $img, NL-3, CT);
-place_tile($e_cd, $img, CT, NL-3);
 
+## 19x19
+# place_tile($e_cd, $img, 4, 4);
+# place_tile($e_cd, $img, 4, NL-3);
+# place_tile($e_cd, $img, NL-3, 4);
+# place_tile($e_cd, $img, NL-3, NL-3);
+# place_tile($e_cd, $img, CT, CT);
+# place_tile($e_cd, $img, CT, 4);
+# place_tile($e_cd, $img, 4, CT);
+# place_tile($e_cd, $img, NL-3, CT);
+# place_tile($e_cd, $img, CT, NL-3);
 
 ## place move
 open my $png, '>', "img/board.png";

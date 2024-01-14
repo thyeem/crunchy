@@ -1,9 +1,9 @@
 # Crunchy
 
-`Crunchy`(https://sofimarie.com) is a web-board game powered by `BCF`(https://github.com/thyeem/bcf_ai).
+`Crunchy`(https://sofmar.xyz) is a web-board game powered by `BCF`(https://github.com/thyeem/bcf_ai).
 
 
-Go get some crunchy bites. [Crunchy!](http://sofimarie.com)
+Go get some crunchy bites. [Crunchy!](http://sofmar.xyz)
 
 <p align="center">
 <img src="media/crunchy.png" width="400px"/>
